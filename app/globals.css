@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #ffffff;
+  --color-foreground: #111111;
+  --color-gold: #C8A800;
+  --color-gold-dark: #a88c00;
+  --color-army: #2e3a1e;
+  --color-army-light: #3d4d28;
+  --color-rose: #F43F5E;
+  --color-card: #f5f5f5;
+  --color-card-border: #e5e5e5;
+  --color-muted: #777777;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-bebas);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* Hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Button pop animation */
+@keyframes btn-pop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.91); }
+  65%  { transform: scale(1.06); }
+  85%  { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+.btn-pop { animation: btn-pop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }

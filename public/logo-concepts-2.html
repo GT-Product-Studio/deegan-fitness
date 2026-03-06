@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>H&H Fitness — Logo Variations</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a0a0a;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    padding: 60px 40px 80px;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 10px;
+  }
+  .page-sub {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 56px;
+    text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 36px 28px;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .card-meta { display: flex; flex-direction: column; gap: 4px; }
+  .card-num { font-size: 9px; letter-spacing: 0.3em; color: #c9a84c; text-transform: uppercase; }
+  .card-name { font-size: 15px; font-weight: 700; color: white; }
+  .card-desc { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.65; }
+
+  .stage {
+    background: #0a0a0a;
+    border-radius: 14px;
+    padding: 32px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    min-height: 140px;
+  }
+
+  .stage.light {
+    background: #f0ede8;
+  }
+
+  .variant { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .v-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+  .stage.light .v-label { color: rgba(0,0,0,0.25); }
+
+  /* ── SHARED ── */
+  .gold { color: #c9a84c; }
+  .white { color: #fff; }
+
+
+  /* ═══════════════════════════════════════════════
+     04 — FLAME MONOGRAM
+  ═══════════════════════════════════════════════ */
+
+  .flame-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #1a1400, #0a0a0a);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .flame-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.18), transparent 70%);
+  }
+  .flame-svg { width: 32px; height: 38px; position: relative; z-index: 1; }
+
+  .flame-wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+  }
+  .flame-hh {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    color: white;
+  }
+  .flame-hh .amp { color: #c9a84c; }
+  .flame-sub {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-top: 1px;
+  }
+  .flame-lockup { display: flex; align-items: center; gap: 12px; }
+
+  .flame-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 100px;
+    background: rgba(201,168,76,0.06);
+  }
+  .flame-pill-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: white;
+    line-height: 1;
+  }
+  .flame-pill-text .amp { color: #c9a84c; }
+
+
+  /* ═══════════════════════════════════════════════
+     05 — EDITORIAL / LUXURY SCRIPT
+  ═══════════════════════════════════════════════ */
+
+  .edit-mark {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 56px;
+    line-height: 1;
+    color: #c9a84c;
+    letter-spacing: -0.02em;
+  }
+
+  .edit-wordmark {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .edit-top {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+  .edit-his {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 36px;
+    font-weight: 400;
+    color: #c9a84c;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .edit-amp-mid {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 28px;
+    color: rgba(255,255,255,0.3);
+    margin: 0 4px;
+  }
+  .edit-hers {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: white;
+    line-height: 1.1;
+    letter-spacing: 0.12em;
+  }
+  .edit-fitness {
+    font-size: 8px;
+    letter-spacing: 0.55em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 6px;
+    width: 100%;
+  }
+
+  /* full stacked version */
+  .edit-stacked {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .edit-stacked-his {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 52px;
+    font-weight: 700;
+    color: #c9a84c;
+    line-height: 0.9;
+  }
+  .edit-stacked-amp {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: rgba(255,255,255,0.25);
+  }
+  .edit-stacked-hers {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: white;
+    letter-spacing: 0.15em;
+    line-height: 1;
+  }
+  .edit-stacked-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(201,168,76,0.4);
+    margin: 6px auto;
+  }
+  .edit-stacked-sub {
+    font-size: 8px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+
+  /* ═══════════════════════════════════════════════
+     06 — BARBELL H
+  ═══════════════════════════════════════════════ */
+
+  .barbell-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .barbell-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .bb-plate {
+    width: 8px;
+    height: 36px;
+    background: #c9a84c;
+    border-radius: 3px;
+  }
+  .bb-plate.sm {
+    width: 5px;
+    height: 26px;
+    background: rgba(201,168,76,0.5);
+    margin: 0 2px;
+  }
+  .bb-bar {
+    height: 5px;
+    width: 20px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+  }
+  .bb-h {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: white;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    padding: 0 8px;
+    position: relative;
+  }
+  .bb-amp {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: #c9a84c;
+    line-height: 1;
+    margin: 0 4px;
+    align-self: center;
+  }
+  .bb-sub {
+    font-size: 8px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* icon version */
+  .bb-icon {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .bb-icon-plate {
+    width: 7px;
+    height: 42px;
+    border-radius: 3px;
+    background: #c9a84c;
+  }
+  .bb-icon-bar {
+    height: 4px;
+    width: 14px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+  }
+  .bb-icon-letter {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: white;
+    line-height: 1;
+    padding: 0 6px;
+  }
+  .bb-icon-sep {
+    width: 4px;
+    height: 42px;
+    background: rgba(201,168,76,0.3);
+    border-radius: 2px;
+    margin: 0 2px;
+  }
+  .bb-icon-letter-right {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: #c9a84c;
+    line-height: 1;
+    padding: 0 6px;
+  }
+
+
+  /* ═══════════════════════════════════════════════
+     07 — ULTRA MINIMAL / WORDMARK ONLY
+  ═══════════════════════════════════════════════ */
+
+  .min-a {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .min-a-top {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: white;
+    line-height: 1;
+  }
+  .min-a-top .amp { color: #c9a84c; font-weight: 300; }
+  .min-a-rule {
+    width: 100%;
+    height: 1.5px;
+    background: linear-gradient(to right, #c9a84c, transparent);
+    margin: 6px 0 5px;
+  }
+  .min-a-sub {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* version B */
+  .min-b {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .min-b-mark {
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid #c9a84c;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .min-b-inner {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #c9a84c;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  .min-b-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .min-b-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.02em;
+  }
+  .min-b-name .amp { color: #c9a84c; font-weight: 300; }
+  .min-b-sub {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* version C — just the letters spaced way out */
+  .min-c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .min-c-hh {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    color: white;
+    line-height: 1;
+  }
+  .min-c-rule {
+    width: 100%;
+    height: 1px;
+    background: rgba(201,168,76,0.4);
+  }
+  .min-c-sub {
+    font-size: 9px;
+    letter-spacing: 0.6em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+
+  /* ═══════════════════════════════════════════════
+     08 — CREST / BADGE MARK
+  ═══════════════════════════════════════════════ */
+
+  .crest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .crest-svg {
+    width: 90px;
+    height: 90px;
+  }
+
+  .crest-small {
+    width: 60px;
+    height: 60px;
+  }
+
+  .crest-inline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .crest-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .crest-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: white;
+    line-height: 1;
+    letter-spacing: 0.1em;
+  }
+  .crest-sub {
+    font-size: 8px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+</style>
+</head>
+<body>
+
+<p class="page-title">H&amp;H Fitness — Logo Variations</p>
+<p class="page-sub">Round 2 · 5 new directions</p>
+
+<div class="grid">
+
+  <!-- ═══ 04 FLAME MONOGRAM ═══ -->
+  <div class="card">
+    <div class="card-meta">
+      <p class="card-num">Concept 04</p>
+      <p class="card-name">Flame Monogram</p>
+      <p class="card-desc">The flame from the app's "Mark Complete" moment becomes the brand icon. Gold glow on dark, Bebas wordmark alongside. Could double as the app icon on home screens.</p>
+    </div>
+
+    <div class="stage">
+      <!-- icon -->
+      <div class="variant">
+        <div class="flame-icon">
+          <svg class="flame-svg" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2C16 2 22 10 22 16C22 19 20 21 18 22C19 18 17 15 16 13C15 17 12 20 12 24C12 28 14.5 31 16 32C10 30 6 25.5 6 20C6 13 11 8 11 8C11 8 10 14 12 16C12 16 12 8 16 2Z" fill="url(#flame-grad)" />
+            <path d="M16 24C16 24 19 21 19 18C19 16.5 18 15 17 14.5C17 17 15.5 19.5 15 21C13.5 19.5 13 17 13 15C12 16.5 12 18 12 20C12 23.5 13.5 26 16 28C18.5 26 20 23.5 20 20C20 18 19 16 18 14.5C18 17 16.5 21 16 24Z" fill="url(#flame-core)" opacity="0.8" />
+            <defs>
+              <linearGradient id="flame-grad" x1="16" y1="2" x2="16" y2="32" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFD700" />
+                <stop offset="60%" stop-color="#c9a84c" />
+                <stop offset="100%" stop-color="#8B6914" />
+              </linearGradient>
+              <linearGradient id="flame-core" x1="16" y1="14" x2="16" y2="28" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFF5CC" />
+                <stop offset="100%" stop-color="#FFD700" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="v-label">Icon</span>
+      </div>
+
+      <!-- lockup -->
+      <div class="variant">
+        <div class="flame-lockup">
+          <div class="flame-icon" style="width:46px;height:46px;border-radius:11px">
+            <svg style="width:22px;height:26px" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2C16 2 22 10 22 16C22 19 20 21 18 22C19 18 17 15 16 13C15 17 12 20 12 24C12 28 14.5 31 16 32C10 30 6 25.5 6 20C6 13 11 8 11 8C11 8 10 14 12 16C12 16 12 8 16 2Z" fill="url(#fg2)"/>
+              <defs>
+                <linearGradient id="fg2" x1="16" y1="2" x2="16" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#FFD700"/>
+                  <stop offset="100%" stop-color="#c9a84c"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="flame-wordmark">
+            <div class="flame-hh">H<span class="amp">&amp;</span>H</div>
+            <div class="flame-sub">Fitness</div>
+          </div>
+        </div>
+        <span class="v-label">Lockup</span>
+      </div>
+
+      <!-- pill -->
+      <div class="variant">
+        <div class="flame-pill">
+          <svg style="width:16px;height:18px" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2C16 2 22 10 22 16C22 19 20 21 18 22C19 18 17 15 16 13C15 17 12 20 12 24C12 28 14.5 31 16 32C10 30 6 25.5 6 20C6 13 11 8 11 8C11 8 10 14 12 16C12 16 12 8 16 2Z" fill="#c9a84c"/>
+          </svg>
+          <div class="flame-pill-text">H<span class="amp">&amp;</span>H <span style="color:rgba(255,255,255,0.4);font-size:16px;letter-spacing:0.15em">FITNESS</span></div>
+        </div>
+        <span class="v-label">Nav Bar</span>
+      </div>
+    </div>
+
+    <div class="stage light">
+      <div class="variant">
+        <div class="flame-lockup">
+          <div class="flame-icon" style="width:46px;height:46px;border-radius:11px;background:#1a1400;border-color:rgba(201,168,76,0.4)">
+            <svg style="width:22px;height:26px" viewBox="0 0 32 38" fill="none">
+              <path d="M16 2C16 2 22 10 22 16C22 19 20 21 18 22C19 18 17 15 16 13C15 17 12 20 12 24C12 28 14.5 31 16 32C10 30 6 25.5 6 20C6 13 11 8 11 8C11 8 10 14 12 16C12 16 12 8 16 2Z" fill="#c9a84c"/>
+            </svg>
+          </div>
+          <div class="flame-wordmark">
+            <div class="flame-hh" style="color:#111">H<span class="amp">&amp;</span>H</div>
+            <div class="flame-sub" style="color:rgba(0,0,0,0.35)">Fitness</div>
+          </div>
+        </div>
+        <span class="v-label">Light</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 05 EDITORIAL SCRIPT ═══ -->
+  <div class="card">
+    <div class="card-meta">
+      <p class="card-num">Concept 05</p>
+      <p class="card-name">Editorial Script</p>
+      <p class="card-desc">Script italic gold for "his", bold block white for "HERS". Contrast between soft and hard — the couple. High-fashion energy. Feels premium, editorial, influencer-native.</p>
+    </div>
+
+    <div class="stage">
+      <div class="variant">
+        <div class="edit-stacked">
+          <div class="edit-stacked-his">his</div>
+          <div class="edit-stacked-amp">&amp;</div>
+          <div class="edit-stacked-hers">HERS</div>
+          <div class="edit-stacked-line"></div>
+          <div class="edit-stacked-sub">Fitness</div>
+        </div>
+        <span class="v-label">Stacked</span>
+      </div>
+
+      <div class="variant">
+        <div class="edit-wordmark">
+          <div class="edit-top">
+            <div class="edit-his">his</div>
+            <div class="edit-amp-mid">&amp;</div>
+            <div class="edit-hers">HERS</div>
+          </div>
+          <div class="edit-fitness">Fitness</div>
+        </div>
+        <span class="v-label">Horizontal</span>
+      </div>
+    </div>
+
+    <div class="stage light">
+      <div class="variant">
+        <div class="edit-stacked">
+          <div class="edit-stacked-his">his</div>
+          <div class="edit-stacked-amp" style="color:rgba(0,0,0,0.2)">&amp;</div>
+          <div class="edit-stacked-hers" style="color:#111">HERS</div>
+          <div class="edit-stacked-line"></div>
+          <div class="edit-stacked-sub" style="color:rgba(0,0,0,0.3)">Fitness</div>
+        </div>
+        <span class="v-label">Light</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 06 BARBELL H ═══ -->
+  <div class="card">
+    <div class="card-meta">
+      <p class="card-num">Concept 06</p>
+      <p class="card-name">Barbell H</p>
+      <p class="card-desc">The crossbar of the H becomes a barbell — a clever fitness mark that works as both a letterform and equipment. Gold plates on the ends. Instantly fitness, immediately readable.</p>
+    </div>
+
+    <div class="stage">
+      <!-- icon version -->
+      <div class="variant">
+        <div class="bb-icon">
+          <div class="bb-icon-plate"></div>
+          <div style="width:3px;height:4px;background:rgba(255,255,255,0.15);border-radius:1px;align-self:center"></div>
+          <div class="bb-icon-bar"></div>
+          <div class="bb-icon-letter">H</div>
+          <div class="bb-icon-sep"></div>
+          <div class="bb-icon-letter-right">H</div>
+          <div class="bb-icon-bar"></div>
+          <div style="width:3px;height:4px;background:rgba(255,255,255,0.15);border-radius:1px;align-self:center"></div>
+          <div class="bb-icon-plate" style="background:#c9a84c"></div>
+        </div>
+        <span class="v-label">Mark</span>
+      </div>
+
+      <!-- wordmark -->
+      <div class="variant">
+        <div class="barbell-lockup">
+          <div class="barbell-row">
+            <div class="bb-plate"></div>
+            <div class="bb-plate sm"></div>
+            <div class="bb-bar"></div>
+            <div class="bb-h">H</div>
+            <div class="bb-amp">&amp;</div>
+            <div class="bb-h" style="color:#c9a84c">H</div>
+            <div class="bb-bar"></div>
+            <div class="bb-plate sm"></div>
+            <div class="bb-plate" style="background:#c9a84c"></div>
+          </div>
+          <div class="bb-sub">Fitness</div>
+        </div>
+        <span class="v-label">Wordmark</span>
+      </div>
+    </div>
+
+    <div class="stage light">
+      <div class="variant">
+        <div class="barbell-lockup">
+          <div class="barbell-row">
+            <div class="bb-plate" style="background:#333"></div>
+            <div class="bb-plate sm" style="background:rgba(0,0,0,0.3)"></div>
+            <div class="bb-bar" style="background:rgba(0,0,0,0.12)"></div>
+            <div class="bb-h" style="color:#111">H</div>
+            <div class="bb-amp">&amp;</div>
+            <div class="bb-h" style="color:#c9a84c">H</div>
+            <div class="bb-bar" style="background:rgba(0,0,0,0.12)"></div>
+            <div class="bb-plate sm" style="background:rgba(0,0,0,0.3)"></div>
+            <div class="bb-plate" style="background:#c9a84c"></div>
+          </div>
+          <div class="bb-sub" style="color:rgba(0,0,0,0.3)">Fitness</div>
+        </div>
+        <span class="v-label">Light</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 07 ULTRA MINIMAL ═══ -->
+  <div class="card">
+    <div class="card-meta">
+      <p class="card-num">Concept 07</p>
+      <p class="card-name">Ultra Minimal</p>
+      <p class="card-desc">Zero decoration. Just the letters — tight, confident, heavy. A gold rule separates the wordmark from "FITNESS". Scales perfectly at any size. Nike-energy without trying too hard.</p>
+    </div>
+
+    <div class="stage">
+      <!-- version A — rule beneath -->
+      <div class="variant">
+        <div class="min-a">
+          <div class="min-a-top">H<span class="amp">&amp;</span>H</div>
+          <div class="min-a-rule"></div>
+          <div class="min-a-sub">Fitness</div>
+        </div>
+        <span class="v-label">A</span>
+      </div>
+
+      <!-- version B — boxed mark -->
+      <div class="variant">
+        <div class="min-b">
+          <div class="min-b-mark">
+            <div class="min-b-inner">H</div>
+          </div>
+          <div class="min-b-right">
+            <div class="min-b-name">H<span class="amp">&amp;</span>H</div>
+            <div class="min-b-sub">Fitness</div>
+          </div>
+        </div>
+        <span class="v-label">B</span>
+      </div>
+
+      <!-- version C — spaced HH -->
+      <div class="variant">
+        <div class="min-c">
+          <div class="min-c-hh">HH</div>
+          <div class="min-c-rule"></div>
+          <div class="min-c-sub">Fitness</div>
+        </div>
+        <span class="v-label">C</span>
+      </div>
+    </div>
+
+    <div class="stage light">
+      <div class="variant">
+        <div class="min-a">
+          <div class="min-a-top" style="color:#111">H<span class="amp">&amp;</span>H</div>
+          <div class="min-a-rule"></div>
+          <div class="min-a-sub" style="color:rgba(0,0,0,0.35)">Fitness</div>
+        </div>
+        <span class="v-label">Light</span>
+      </div>
+      <div class="variant">
+        <div class="min-b">
+          <div class="min-b-mark" style="border-color:rgba(201,168,76,0.6)">
+            <div class="min-b-inner">H</div>
+          </div>
+          <div class="min-b-right">
+            <div class="min-b-name" style="color:#111">H<span class="amp">&amp;</span>H</div>
+            <div class="min-b-sub" style="color:rgba(0,0,0,0.3)">Fitness</div>
+          </div>
+        </div>
+        <span class="v-label">Light</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 08 CREST ═══ -->
+  <div class="card" style="grid-column: 1 / -1;">
+    <div class="card-meta">
+      <p class="card-num">Concept 08</p>
+      <p class="card-name">Crest / Badge</p>
+      <p class="card-desc">A premium athletic crest — the kind you'd see on a competition jersey or a heritage gym. His on the left half, Hers on the right, joined at the center point. Feels earned. Works as a patch, embroidery, or watermark on apparel.</p>
+    </div>
+
+    <div class="stage" style="gap: 48px;">
+      <!-- Full crest SVG -->
+      <div class="variant">
+        <svg class="crest-svg" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Shield outline -->
+          <path d="M60 4 L110 24 L110 72 Q110 108 60 126 Q10 108 10 72 L10 24 Z" fill="rgba(201,168,76,0.06)" stroke="#c9a84c" stroke-width="1.5"/>
+          <!-- Centre divider -->
+          <line x1="60" y1="8" x2="60" y2="122" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+          <!-- HIS left -->
+          <text x="30" y="58" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="26" fill="white" letter-spacing="2">HIS</text>
+          <!-- HERS right -->
+          <text x="87" y="58" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="22" fill="#c9a84c" letter-spacing="1.5">HERS</text>
+          <!-- Top banner -->
+          <path d="M28 28 L92 28" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <text x="60" y="24" text-anchor="middle" font-family="'Inter',sans-serif" font-size="6" fill="rgba(255,255,255,0.4)" letter-spacing="3">HIS &amp; HERS</text>
+          <!-- Bottom banner -->
+          <path d="M24 88 Q60 100 96 88" stroke="rgba(201,168,76,0.4)" stroke-width="1" fill="none"/>
+          <text x="60" y="82" text-anchor="middle" font-family="'Inter',sans-serif" font-size="6.5" fill="rgba(201,168,76,0.7)" letter-spacing="4">FITNESS</text>
+          <!-- Corner stars -->
+          <text x="20" y="34" font-size="6" fill="rgba(201,168,76,0.5)" text-anchor="middle">★</text>
+          <text x="100" y="34" font-size="6" fill="rgba(201,168,76,0.5)" text-anchor="middle">★</text>
+        </svg>
+        <span class="v-label">Full Crest</span>
+      </div>
+
+      <!-- Small crest -->
+      <div class="variant">
+        <svg class="crest-small" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 4 L110 24 L110 72 Q110 108 60 126 Q10 108 10 72 L10 24 Z" fill="rgba(201,168,76,0.08)" stroke="#c9a84c" stroke-width="2"/>
+          <line x1="60" y1="8" x2="60" y2="122" stroke="rgba(201,168,76,0.25)" stroke-width="1.5"/>
+          <text x="33" y="60" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="28" fill="white" letter-spacing="1">H</text>
+          <text x="88" y="60" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="28" fill="#c9a84c" letter-spacing="1">H</text>
+        </svg>
+        <span class="v-label">Icon</span>
+      </div>
+
+      <!-- Inline with wordmark -->
+      <div class="variant">
+        <div class="crest-inline">
+          <svg style="width:52px;height:56px" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60 4 L110 24 L110 72 Q110 108 60 126 Q10 108 10 72 L10 24 Z" fill="rgba(201,168,76,0.08)" stroke="#c9a84c" stroke-width="2"/>
+            <line x1="60" y1="8" x2="60" y2="122" stroke="rgba(201,168,76,0.25)" stroke-width="1.5"/>
+            <text x="33" y="62" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="30" fill="white">H</text>
+            <text x="88" y="62" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="30" fill="#c9a84c">H</text>
+          </svg>
+          <div class="crest-text">
+            <div class="crest-name">H&amp;H</div>
+            <div class="crest-sub">Fitness</div>
+          </div>
+        </div>
+        <span class="v-label">Lockup</span>
+      </div>
+
+      <!-- Light bg -->
+      <div class="variant">
+        <div style="background:#f0ede8;padding:20px 24px;border-radius:12px">
+          <svg style="width:52px;height:56px" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60 4 L110 24 L110 72 Q110 108 60 126 Q10 108 10 72 L10 24 Z" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" stroke-width="2"/>
+            <line x1="60" y1="8" x2="60" y2="122" stroke="rgba(201,168,76,0.3)" stroke-width="1.5"/>
+            <text x="33" y="62" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="30" fill="#111">H</text>
+            <text x="88" y="62" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="30" fill="#c9a84c">H</text>
+          </svg>
+        </div>
+        <span class="v-label">Light</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
