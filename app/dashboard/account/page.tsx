@@ -5,11 +5,11 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { CreditCard, LogOut, User, Zap } from "lucide-react";
 import { brand } from "@/config/brand";
+import { WearableConnections } from "@/app/components/wearable-connections";
 
 type Profile = {
   full_name: string | null;
   email: string | null;
-  training_level: string | null;
   stripe_customer_id: string | null;
 };
 
@@ -33,6 +33,8 @@ export default function AccountPage() {
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [wearableConnections, setWearableConnections] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [portalLoading, setPortalLoading] = useState(false);
   const [portalError, setPortalError] = useState<string | null>(null);
@@ -42,13 +44,15 @@ export default function AccountPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push("/login"); return; }
 
-      const [{ data: prof }, { data: sub }] = await Promise.all([
-        supabase.from("profiles").select("full_name, email, training_level, stripe_customer_id").eq("id", user.id).single(),
+      const [{ data: prof }, { data: sub }, { data: wearables }] = await Promise.all([
+        supabase.from("profiles").select("full_name, email, stripe_customer_id").eq("id", user.id).single(),
         supabase.from("subscriptions").select("plan_type, status, current_period_end").eq("user_id", user.id).eq("status", "active").maybeSingle(),
+        supabase.from("wearable_connections").select("id, provider, connected_at, last_sync_at, sync_status").eq("user_id", user.id),
       ]);
 
       setProfile(prof);
       setSubscription(sub);
+      setWearableConnections(wearables || []);
       setLoading(false);
     }
     load();
@@ -180,6 +184,9 @@ export default function AccountPage() {
           </div>
         </div>
       </div>
+
+      {/* Wearable Connections */}
+      <WearableConnections connections={wearableConnections} />
 
       {/* Logout */}
       <button
