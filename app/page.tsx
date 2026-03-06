@@ -251,7 +251,7 @@ export default function Home() {
                 stat: `${brand.benchmarks.dailyCyclingMiles} miles`,
                 desc: "50 miles before most people wake up. Zone 2-3 endurance base that builds the aerobic engine a moto racer needs.",
                 zones: "HR Zone 2-3",
-                image: "/images/deegan/deegan-5.jpg",
+                image: "/images/deegan/deegan-sx-7.jpg",
               },
               {
                 icon: Timer,
@@ -267,7 +267,7 @@ export default function Home() {
                 stat: `${brand.benchmarks.dailyGymHours} hours`,
                 desc: "1.5 hours of strength and conditioning. Upper body, core, legs. The physical armor for 30+ minute motos.",
                 zones: "HR Zone 2-4",
-                image: "/images/deegan/deegan-1.jpg",
+                image: "/images/deegan/deegan-sx-12.jpg",
               },
             ].map(({ icon: Icon, title, stat, desc, zones, image }) => (
               <motion.div
@@ -521,7 +521,7 @@ export default function Home() {
       {/* ── FINAL CTA ── */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <Image
-          src="/images/deegan/deegan-1.jpg"
+          src="/images/deegan/deegan-sx-6.jpg"
           alt="Haiden Deegan"
           fill
           quality={100}

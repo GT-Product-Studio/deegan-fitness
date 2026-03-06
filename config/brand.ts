@@ -110,7 +110,7 @@ export const brand = {
     subheadline: "The exact regiment that built a two-time champion.",
     ctaLabel: "Start Training — $19.99/mo",
     ctaSecondaryLabel: "See the Program",
-    heroImage: "/images/deegan/deegan-hero-poster.jpg",
+    heroImage: "/images/deegan/deegan-sx-11.jpg",
     heroVideo: "/videos/braap_hero.mp4",
     /** Featured quote below the hero */
     featuredQuote:
@@ -135,7 +135,7 @@ export const brand = {
     hometown: "Temecula, CA",
     specialty: "Motocross & Supercross",
     handle: "@haidendeegan",
-    photo: "/images/deegan/deegan-portrait.jpg",
+    photo: "/images/deegan/deegan-sx-9.jpg",
     bioPhoto: "/images/deegan/deegan-1.jpg",
     heroPhoto: "/images/deegan/deegan-hero-poster.jpg",
     stadiumPhoto: "/images/deegan/deegan-sx-1.jpg",
