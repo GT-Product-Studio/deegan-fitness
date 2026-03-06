@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+
 import { motion } from "framer-motion";
 import { ChevronDown, Heart, Bike, Dumbbell, Timer, ArrowRight, Instagram, ExternalLink } from "lucide-react";
-import { brand, type TrainingLevelId } from "@/config/brand";
+import { brand } from "@/config/brand";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -17,8 +17,7 @@ const stagger = {
 };
 
 export default function Home() {
-  const [selectedLevel, setSelectedLevel] = useState<TrainingLevelId>("factory");
-  const level = brand.levels[selectedLevel];
+  const regiment = brand.regiment;
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -159,29 +158,27 @@ export default function Home() {
             </motion.h2>
             <motion.p variants={fadeUp} className="text-muted text-sm md:text-base max-w-lg mb-10 leading-relaxed">
               Mon-Wed: full send. Thu-Fri: travel or train. Saturday: race day. Sunday: recover.
-              Every week follows this structure. Choose your intensity.
+              Every week follows this structure. Haiden&rsquo;s actual numbers.
             </motion.p>
           </motion.div>
 
-          {/* Level selector */}
-          <div className="flex gap-2 mb-8">
-            {(Object.values(brand.levels) as typeof brand.levels[TrainingLevelId][]).map((lvl) => (
-              <button
-                key={lvl.id}
-                onClick={() => setSelectedLevel(lvl.id)}
-                className={`px-4 py-2.5 text-xs font-bold tracking-widest uppercase transition border ${
-                  selectedLevel === lvl.id
-                    ? "bg-primary text-black border-primary"
-                    : "bg-transparent text-muted border-white/10 hover:border-white/30 hover:text-white"
-                }`}
-              >
-                {lvl.emoji} {lvl.name}
-              </button>
-            ))}
+          {/* Regiment stats */}
+          <div className="flex gap-6 mb-8">
+            <div className="text-center">
+              <p className="font-display text-3xl font-bold text-primary">{regiment.cyclingMiles}</p>
+              <p className="text-xs text-muted uppercase tracking-wider">Miles/Day</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display text-3xl font-bold text-primary">{regiment.motoHours}</p>
+              <p className="text-xs text-muted uppercase tracking-wider">Hrs Moto</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display text-3xl font-bold text-primary">{regiment.gymHours}</p>
+              <p className="text-xs text-muted uppercase tracking-wider">Hrs Gym</p>
+            </div>
           </div>
 
-          {/* Level description */}
-          <p className="text-muted text-sm mb-6 max-w-md">{level.description}</p>
+          <p className="text-muted text-sm mb-6 max-w-md">{regiment.description}</p>
 
           {/* Weekly grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-2">
@@ -216,9 +213,9 @@ export default function Home() {
                   </p>
                   {isTraining && (
                     <div className="space-y-1 text-[11px] text-muted">
-                      <p>{level.cyclingMiles}mi ride</p>
-                      <p>{level.motoHours}hr moto</p>
-                      <p>{level.gymHours}hr gym</p>
+                      <p>{regiment.cyclingMiles}mi ride</p>
+                      <p>{regiment.motoHours}hr moto</p>
+                      <p>{regiment.gymHours}hr gym</p>
                     </div>
                   )}
                   {!isTraining && (
@@ -542,7 +539,7 @@ export default function Home() {
               The Regiment Is The Edge
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-6 text-white/60 text-sm md:text-base">
-              {brand.subscription.priceFormatted}/mo &middot; All levels &middot; Cancel anytime
+              {brand.subscription.priceFormatted}/mo &middot; Full regiment &middot; Cancel anytime
             </motion.p>
             <motion.div variants={fadeUp} className="mt-8">
               <Link

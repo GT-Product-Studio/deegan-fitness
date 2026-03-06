@@ -1,7 +1,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // DEEGAN FITNESS — BRAND CONFIGURATION
 // Single-trainer subscription platform for MX riders.
-// Haiden Deegan's actual training regimen, scaled to 3 levels.
+// Haiden Deegan's actual training regimen — one program, no tiers.
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -18,10 +18,8 @@ export interface TrainerConfig {
   gradient: string;
 }
 
-export interface TrainingLevel {
-  id: "rookie" | "pro-am" | "factory";
+export interface Regiment {
   name: string;
-  emoji: string;
   description: string;
   /** Cycling distance per day */
   cyclingMiles: number;
@@ -88,7 +86,7 @@ export const brand = {
   shortName: "DEEGAN",
   tagline: "Train Like a Champion",
   description:
-    "Haiden Deegan's real MX training regimen — road cycling, motocross practice, and gym work. Scaled to your level. Synced to your watch. Race the champ.",
+    "Haiden Deegan's real MX training regimen — road cycling, motocross practice, and gym work. Synced to your watch. Race the champ.",
   domain: "https://deegan-fitness.vercel.app",
   supportEmail: "support@deeganfitness.com",
   fromEmail: "Deegan Fitness <noreply@deeganfitness.com>",
@@ -165,62 +163,24 @@ export const brand = {
     stadiumPhoto: string;
   },
 
-  // ─── Training Levels ─────────────────────────────────────────────────────────
-  levels: {
-    rookie: {
-      id: "rookie",
-      name: "Rookie",
-      emoji: "🟢",
-      description: "Getting started. Build the engine before you race it.",
-      cyclingMiles: 15,
-      motoHours: 0.75,
-      gymHours: 0.75,
-      features: [
-        "15-mile daily road ride",
-        "45-min moto practice",
-        "45-min gym session",
-        "HR zone guidance",
-        "Race week schedule",
-        "Recovery programming",
-      ],
-    } satisfies TrainingLevel,
-
-    "pro-am": {
-      id: "pro-am",
-      name: "Pro Am",
-      emoji: "🟡",
-      description: "Serious riders. Serious work. Halfway to factory.",
-      cyclingMiles: 30,
-      motoHours: 1.5,
-      gymHours: 1,
-      features: [
-        "30-mile daily road ride",
-        "1.5-hr moto practice",
-        "1-hr gym session",
-        "HR zone targets per workout",
-        "Race week periodization",
-        "Active recovery protocols",
-      ],
-    } satisfies TrainingLevel,
-
-    factory: {
-      id: "factory",
-      name: "Factory",
-      emoji: "🔴",
-      description: "Haiden's actual regiment. No shortcuts. No excuses.",
-      cyclingMiles: 50,
-      motoHours: 2,
-      gymHours: 1.5,
-      features: [
-        "50-mile daily road ride",
-        "2-hr moto practice",
-        "1.5-hr gym session",
-        "Exact HR zone targets",
-        "Haiden's race-week structure",
-        "Benchmark against Haiden's stats",
-      ],
-    } satisfies TrainingLevel,
-  },
+  // ─── The Regiment (Haiden's actual daily training) ────────────────────────────
+  regiment: {
+    name: "The Regiment",
+    description: "Haiden's actual daily training. No shortcuts. No excuses.",
+    cyclingMiles: 50,
+    motoHours: 2,
+    gymHours: 1.5,
+    features: [
+      "50-mile daily road ride",
+      "2-hr moto practice",
+      "1.5-hr gym session",
+      "Exact HR zone targets",
+      "Haiden's race-week structure",
+      "Benchmark against Haiden's stats",
+      "Recovery programming",
+      "Race-week schedule adjustments",
+    ],
+  } satisfies Regiment,
 
   // ─── Weekly Regiment Structure ───────────────────────────────────────────────
   weekSchedule: [
@@ -333,14 +293,14 @@ export const brand = {
     priceDollars: "$19",
     priceCents: ".99",
     description:
-      "Haiden's full training regiment — all 3 levels, HR zone training, benchmark tracking, and race-week programming.",
+      "Haiden's exact daily training regiment — HR zone training, benchmark tracking, and race-week programming.",
     features: [
-      "All 3 training levels (Rookie / Pro Am / Factory)",
+      "Haiden's actual daily regiment",
       "Weekly programming that follows the race season",
       "Heart rate zone training guides",
       "Garmin & Polar watch sync",
       "Benchmark your stats against Haiden's",
-      "Community leaderboard",
+      "Monthly 30-day challenge + leaderboard",
       "Race-week schedule adjustments",
       "Cancel anytime",
     ],
@@ -420,13 +380,6 @@ export const brand = {
 
 // ── Derived helpers ──────────────────────────────────────────────────────────
 
-export type TrainingLevelId = "rookie" | "pro-am" | "factory";
-
-/** Look up a training level config */
-export function getLevelConfig(id: string): TrainingLevel | undefined {
-  return (brand.levels as Record<string, TrainingLevel>)[id];
-}
-
 /** Calculate personal HR zones based on max heart rate */
 export function calculateHRZones(maxHR: number) {
   return brand.hrZones.map((zone) => ({
@@ -435,10 +388,3 @@ export function calculateHRZones(maxHR: number) {
     maxBPM: Math.round(maxHR * (zone.maxPct / 100)),
   }));
 }
-
-/** Level labels for quick lookup */
-export const LEVEL_LABELS: Record<string, string> = {
-  rookie: "Rookie",
-  "pro-am": "Pro Am",
-  factory: "Factory",
-};

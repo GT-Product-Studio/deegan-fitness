@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { CreditCard, LogOut, User, Zap } from "lucide-react";
-import { brand, LEVEL_LABELS } from "@/config/brand";
+import { brand } from "@/config/brand";
 
 type Profile = {
   full_name: string | null;
@@ -88,7 +88,6 @@ export default function AccountPage() {
   }
 
   const hasSubscription = !!subscription;
-  const trainingLevel = profile?.training_level ?? "rookie";
 
   return (
     <div className="space-y-4 pb-6">
@@ -122,8 +121,8 @@ export default function AccountPage() {
               <span className="font-semibold text-white">{brand.subscription.priceFormatted} / month</span>
             </div>
             <div className="flex justify-between">
-              <span>Training Level</span>
-              <span className="font-semibold text-white">{LEVEL_LABELS[trainingLevel] ?? "Rookie"}</span>
+              <span>Program</span>
+              <span className="font-semibold text-white">The Regiment</span>
             </div>
             {subscription.current_period_end && (
               <div className="flex justify-between">

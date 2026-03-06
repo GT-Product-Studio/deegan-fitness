@@ -1,9 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Flame, CheckCircle, Bike, Timer, Dumbbell } from "lucide-react";
-import { ProgressRing } from "@/app/components/progress-ring";
-import { LevelSelector } from "@/app/components/level-selector";
-import { brand, LEVEL_LABELS } from "@/config/brand";
+import { Bike, Timer, Dumbbell } from "lucide-react";
+import { brand } from "@/config/brand";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -16,9 +14,8 @@ export default async function DashboardPage() {
     .eq("id", user.id)
     .single();
 
-  const trainingLevel = profile?.training_level ?? "rookie";
-  const levelConfig = brand.levels[trainingLevel as keyof typeof brand.levels] ?? brand.levels.rookie;
   const firstName = profile?.full_name?.split(" ")[0] ?? null;
+  const regiment = brand.regiment;
 
   const today = new Date();
   const dayOfWeek = today.getDay();
@@ -34,11 +31,11 @@ export default async function DashboardPage() {
       <div className="bg-card border border-white/10 rounded-2xl p-5">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-            <span className="text-lg">{levelConfig.emoji}</span>
+            <span className="text-lg">🏁</span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs text-muted font-medium">
-              {firstName ? `Hey, ${firstName}` : "Hey"} &mdash; {LEVEL_LABELS[trainingLevel]} Level
+              {firstName ? `Hey, ${firstName}` : "Hey"} &mdash; The Regiment
             </p>
             <p className="text-sm text-muted mt-1 italic leading-relaxed line-clamp-2">
               &ldquo;{quote}&rdquo;
@@ -46,9 +43,6 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
-
-      {/* Level Selector */}
-      <LevelSelector currentLevel={trainingLevel} userId={user.id} />
 
       {/* Today's Schedule */}
       <div className="bg-card border border-white/10 rounded-2xl overflow-hidden">
@@ -71,17 +65,17 @@ export default async function DashboardPage() {
             <div className="grid grid-cols-3 gap-3 mt-4">
               <div className="bg-card-elevated border border-white/5 rounded-xl p-3 text-center">
                 <Bike className="w-5 h-5 text-primary mx-auto mb-1" />
-                <p className="font-display text-xl font-bold text-white">{levelConfig.cyclingMiles}mi</p>
+                <p className="font-display text-xl font-bold text-white">{regiment.cyclingMiles}mi</p>
                 <p className="text-[10px] text-muted tracking-wider uppercase">Road Ride</p>
               </div>
               <div className="bg-card-elevated border border-white/5 rounded-xl p-3 text-center">
                 <Timer className="w-5 h-5 text-zone-threshold mx-auto mb-1" />
-                <p className="font-display text-xl font-bold text-white">{levelConfig.motoHours}hr</p>
+                <p className="font-display text-xl font-bold text-white">{regiment.motoHours}hr</p>
                 <p className="text-[10px] text-muted tracking-wider uppercase">Moto</p>
               </div>
               <div className="bg-card-elevated border border-white/5 rounded-xl p-3 text-center">
                 <Dumbbell className="w-5 h-5 text-zone-tempo mx-auto mb-1" />
-                <p className="font-display text-xl font-bold text-white">{levelConfig.gymHours}hr</p>
+                <p className="font-display text-xl font-bold text-white">{regiment.gymHours}hr</p>
                 <p className="text-[10px] text-muted tracking-wider uppercase">Gym</p>
               </div>
             </div>

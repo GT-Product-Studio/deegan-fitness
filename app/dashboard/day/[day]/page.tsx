@@ -23,13 +23,10 @@ export default async function DayPage({
     .eq("id", user.id)
     .single();
 
-  const trainingLevel = profile?.training_level || "rookie";
-
   // Fetch workout for this day
   const { data: workout } = await supabase
     .from("workouts")
     .select("*")
-    .eq("training_level", trainingLevel)
     .eq("day_number", dayNumber)
     .single();
 

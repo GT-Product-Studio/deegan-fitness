@@ -38,7 +38,7 @@ export default function SignUpPage() {
         id: data.user.id,
         email,
         full_name: fullName,
-        training_level: "rookie",
+        training_level: "regiment",
       });
     }
 

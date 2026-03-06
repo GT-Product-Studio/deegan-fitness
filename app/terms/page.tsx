@@ -26,7 +26,7 @@ export default function TermsPage() {
           },
           {
             title: "2. Subscription & Access",
-            body: `${brand.legal.entityName} offers a monthly subscription at ${brand.subscription.priceFormatted}/month that grants access to all training content, levels, and features. Subscriptions auto-renew monthly until cancelled. You may cancel at any time through your account settings or Stripe billing portal.`,
+            body: `${brand.legal.entityName} offers a monthly subscription at ${brand.subscription.priceFormatted}/month that grants access to Haiden Deegan's full training regiment and all features. Subscriptions auto-renew monthly until cancelled. You may cancel at any time through your account settings or Stripe billing portal.`,
           },
           {
             title: "3. Health & Safety Disclaimer",

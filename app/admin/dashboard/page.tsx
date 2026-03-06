@@ -1,7 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe";
 import { Users, DollarSign, TrendingUp, Activity } from "lucide-react";
-import { brand, LEVEL_LABELS } from "@/config/brand";
+import { brand } from "@/config/brand";
 
 function fmt(n: number) {
   return n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
@@ -29,7 +29,7 @@ async function getData() {
       .order("created_at", { ascending: false })
       .limit(20),
     db.from("profiles")
-      .select("id, email, full_name, training_level, created_at")
+      .select("id, email, full_name, created_at")
       .order("created_at", { ascending: false })
       .limit(100),
     db.from("profiles")
@@ -154,17 +154,16 @@ export default async function AdminDashboardPage() {
             <table className="w-full text-sm min-w-[640px]">
               <thead>
                 <tr className="border-b border-white/10 bg-white/5">
-                  {["Email", "Name", "Level", "Joined"].map((h) => (
+                  {["Email", "Name", "Joined"].map((h) => (
                     <th key={h} className="text-left px-4 py-3 text-[10px] font-bold tracking-[0.2em] uppercase text-white/30">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {allUsers.map((u: { id: string; email: string; full_name: string | null; training_level: string | null; created_at: string }) => (
+                {allUsers.map((u: { id: string; email: string; full_name: string | null; created_at: string }) => (
                   <tr key={u.id} className="border-b border-white/5 hover:bg-white/3 transition">
                     <td className="px-4 py-3 text-white/70 text-xs font-mono">{u.email}</td>
                     <td className="px-4 py-3 text-white/50 text-xs">{u.full_name || <span className="text-white/20">—</span>}</td>
-                    <td className="px-4 py-3 text-white/50 text-xs">{LEVEL_LABELS[u.training_level ?? "rookie"] ?? "Rookie"}</td>
                     <td className="px-4 py-3 text-white/30 text-xs">{u.created_at ? fmtDate(u.created_at) : "—"}</td>
                   </tr>
                 ))}

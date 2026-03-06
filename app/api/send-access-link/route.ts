@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       await supabaseAdmin.from("profiles").upsert({
         id: userId,
         email,
-        training_level: "rookie",
+        training_level: "regiment",
         started_at: now,
         stripe_session_id: session_id,
       });
