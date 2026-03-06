@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { InstallPrompt } from "@/app/components/install-prompt";
-import { User } from "lucide-react";
+import { User, Trophy } from "lucide-react";
 import { brand } from "@/config/brand";
 
 export default function DashboardLayout({
@@ -20,13 +20,22 @@ export default function DashboardLayout({
           <Link href="/dashboard" className="font-display text-lg font-bold tracking-wider uppercase">
             {brand.nav.dashboardLogoPrefix} <span className="text-primary">{brand.nav.dashboardLogoAccent}</span>
           </Link>
-          <Link
-            href="/dashboard/account"
-            className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:bg-card transition"
-            aria-label="Account"
-          >
-            <User className="w-4 h-4 text-muted" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/dashboard/challenge"
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:bg-card transition"
+              aria-label="Challenge"
+            >
+              <Trophy className="w-4 h-4 text-primary" />
+            </Link>
+            <Link
+              href="/dashboard/account"
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:bg-card transition"
+              aria-label="Account"
+            >
+              <User className="w-4 h-4 text-muted" />
+            </Link>
+          </div>
         </div>
       </header>
 

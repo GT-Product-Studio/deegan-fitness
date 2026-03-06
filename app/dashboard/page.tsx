@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Bike, Timer, Dumbbell } from "lucide-react";
+import { Bike, Timer, Dumbbell, Trophy, ChevronRight } from "lucide-react";
 import { brand } from "@/config/brand";
+import Link from "next/link";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -16,6 +17,51 @@ export default async function DashboardPage() {
 
   const firstName = profile?.full_name?.split(" ")[0] ?? null;
   const regiment = brand.regiment;
+
+  // Challenge widget data
+  const now = new Date();
+  const cMonth = now.getMonth() + 1;
+  const cYear = now.getFullYear();
+
+  const { data: challenge } = await supabase
+    .from("challenges")
+    .select("*")
+    .eq("month", cMonth)
+    .eq("year", cYear)
+    .eq("active", true)
+    .single();
+
+  let challengeWidget: {
+    title: string;
+    daysRemaining: number;
+    score: number;
+    rank: number | null;
+  } | null = null;
+
+  if (challenge) {
+    const endsAt = new Date(challenge.ends_at);
+    const daysRemaining = Math.max(
+      0,
+      Math.ceil((endsAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+    );
+
+    const { data: leaderboard } = await supabase
+      .from("challenge_leaderboard")
+      .select("user_id, total_score")
+      .eq("challenge_id", challenge.id)
+      .order("total_score", { ascending: false });
+
+    const userIdx = leaderboard?.findIndex((r) => r.user_id === user.id) ?? -1;
+
+    challengeWidget = {
+      title: challenge.title,
+      daysRemaining,
+      score: Number(
+        leaderboard?.find((r) => r.user_id === user.id)?.total_score ?? 0
+      ),
+      rank: userIdx >= 0 ? userIdx + 1 : null,
+    };
+  }
 
   const today = new Date();
   const dayOfWeek = today.getDay();
@@ -43,6 +89,50 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Challenge Widget */}
+      {challengeWidget && (
+        <Link href="/dashboard/challenge" className="block">
+          <div className="bg-card border border-primary/20 rounded-2xl p-5 hover:border-primary/40 transition">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                  <Trophy className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-primary font-bold tracking-widest uppercase">
+                    Monthly Challenge
+                  </p>
+                  <p className="text-sm text-white font-semibold truncate">
+                    {challengeWidget.title}
+                  </p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted shrink-0" />
+            </div>
+            <div className="flex items-center gap-4 mt-3">
+              <div className="flex-1 text-center bg-card-elevated border border-white/5 rounded-xl py-2">
+                <p className="font-display text-lg font-bold text-primary">
+                  {challengeWidget.score.toLocaleString()}
+                </p>
+                <p className="text-[10px] text-muted tracking-wider uppercase">Score</p>
+              </div>
+              <div className="flex-1 text-center bg-card-elevated border border-white/5 rounded-xl py-2">
+                <p className="font-display text-lg font-bold text-white">
+                  {challengeWidget.rank ? `#${challengeWidget.rank}` : "—"}
+                </p>
+                <p className="text-[10px] text-muted tracking-wider uppercase">Rank</p>
+              </div>
+              <div className="flex-1 text-center bg-card-elevated border border-white/5 rounded-xl py-2">
+                <p className="font-display text-lg font-bold text-white">
+                  {challengeWidget.daysRemaining}
+                </p>
+                <p className="text-[10px] text-muted tracking-wider uppercase">Days Left</p>
+              </div>
+            </div>
+          </div>
+        </Link>
+      )}
 
       {/* Today's Schedule */}
       <div className="bg-card border border-white/10 rounded-2xl overflow-hidden">
