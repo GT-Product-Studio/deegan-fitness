@@ -1,18 +1,23 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #ffffff;
-  --color-foreground: #111111;
-  --color-gold: #C8A800;
-  --color-gold-dark: #a88c00;
-  --color-army: #2e3a1e;
-  --color-army-light: #3d4d28;
-  --color-rose: #F43F5E;
-  --color-card: #f5f5f5;
-  --color-card-border: #e5e5e5;
-  --color-muted: #777777;
+  --color-background: #0A0A0A;
+  --color-foreground: #ffffff;
+  --color-primary: #00D26A;
+  --color-primary-dark: #00A854;
+  --color-card: #111111;
+  --color-card-elevated: #1A1A1A;
+  --color-card-border: #222222;
+  --color-border-light: #333333;
+  --color-muted: #A0A0A0;
+  --color-muted-dark: #666666;
+  --color-zone-recovery: #808080;
+  --color-zone-endurance: #00D26A;
+  --color-zone-tempo: #FFD700;
+  --color-zone-threshold: #FF6B00;
+  --color-zone-redline: #FF0000;
   --font-sans: var(--font-inter);
-  --font-display: var(--font-bebas);
+  --font-display: var(--font-oswald);
 }
 
 body {
@@ -39,3 +44,16 @@ body {
   100% { transform: scale(1); }
 }
 .btn-pop { animation: btn-pop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+
+/* Pulse glow for CTA */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 210, 106, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(0, 210, 106, 0.6); }
+}
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* Selection color */
+::selection {
+  background: rgba(0, 210, 106, 0.3);
+  color: #ffffff;
+}

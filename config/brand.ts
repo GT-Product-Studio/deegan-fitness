@@ -1,7 +1,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// BRAND CONFIGURATION
-// Edit this file to customise the entire platform for your influencer brand.
-// Every brand-specific string in the app reads from this config.
+// DEEGAN FITNESS — BRAND CONFIGURATION
+// Single-trainer subscription platform for MX riders.
+// Haiden Deegan's actual training regimen, scaled to 3 levels.
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -12,42 +12,42 @@ export interface TrainerConfig {
   specialty: string;
   handle: string;
   photo: string;
-  /** Optional separate photo for the trainer bio section (falls back to photo) */
   bioPhoto?: string;
   bio: string;
   quotes: string[];
-  /** CSS gradient used as accent background on dashboard hero */
   gradient: string;
 }
 
-export interface ProgramConfig {
-  /** Display name shown on cards & checkout, e.g. "30-Day Sculpt Challenge" */
+export interface TrainingLevel {
+  id: "rookie" | "pro-am" | "factory";
   name: string;
-  price: number;
-  priceFormatted: string;
-  /** Dollar portion for split display, e.g. "$49" */
-  priceDollars: string;
-  /** Cents portion, e.g. ".99" */
-  priceCents: string;
-  /** Short blurb for cards */
+  emoji: string;
   description: string;
-  /** Longer description for checkout page */
-  checkoutDescription: string;
-  /** Bullet-point features for checkout */
-  checkoutFeatures: string[];
-  /** Bullet-point features for the landing-page program card */
-  cardFeatures: string[];
-  /** Duration label, e.g. "30 Days" */
-  durationLabel: string;
-  /** Total number of days */
-  totalDays: number;
+  /** Cycling distance per day */
+  cyclingMiles: number;
+  /** Moto practice duration */
+  motoHours: number;
+  /** Gym session duration */
+  gymHours: number;
+  features: string[];
 }
 
-export interface TestimonialConfig {
-  quote: string;
+export interface WeekDay {
+  day: string;
+  type: "training" | "travel" | "race" | "recovery";
+  label: string;
+  description: string;
+}
+
+export interface HRZone {
+  zone: number;
   name: string;
-  result: string;
-  program: string;
+  /** Percentage of max HR — low end */
+  minPct: number;
+  /** Percentage of max HR — high end */
+  maxPct: number;
+  description: string;
+  color: string;
 }
 
 export interface SubscriptionConfig {
@@ -58,8 +58,14 @@ export interface SubscriptionConfig {
   priceCents: string;
   description: string;
   features: string[];
-  /** Short pill label for success page, e.g. "$39.99/mo · Cancel anytime" */
   pillLabel: string;
+}
+
+export interface TestimonialConfig {
+  quote: string;
+  name: string;
+  result: string;
+  program: string;
 }
 
 export interface ReelConfig {
@@ -68,427 +74,371 @@ export interface ReelConfig {
   name: string;
 }
 
+export interface StatConfig {
+  value: string;
+  label: string;
+}
+
 // ── Brand Config ─────────────────────────────────────────────────────────────
 
 export const brand = {
 
   // ─── Site Identity ───────────────────────────────────────────────────────────
-  name: "Your Brand Fitness",
-  shortName: "YBF",
-  tagline: "Transform Together",
+  name: "Deegan Fitness",
+  shortName: "DEEGAN",
+  tagline: "Train Like a Champion",
   description:
-    "Fitness challenges with your favourite trainers. Day-by-day programming, exercise videos, and real results.",
-  /** Full site domain including protocol — used for metadata, sitemap, robots */
-  domain: "https://yourbrand.com",
-  supportEmail: "support@yourbrand.com",
-  /** Resend "From" address. Override with RESEND_FROM_EMAIL env var. */
-  fromEmail: "Your Brand Fitness <noreply@yourbrand.com>",
-  /** npm package name — no spaces, lowercase */
-  packageName: "influencer-fitness-template",
+    "Haiden Deegan's real MX training regimen — road cycling, motocross practice, and gym work. Scaled to your level. Synced to your watch. Race the champ.",
+  domain: "https://deegan-fitness.vercel.app",
+  supportEmail: "support@deeganfitness.com",
+  fromEmail: "Deegan Fitness <noreply@deeganfitness.com>",
+  packageName: "deegan-fitness",
 
   // ─── Navigation / Logo ───────────────────────────────────────────────────────
   nav: {
-    /** e.g. "YBF" in "YBF FITNESS" */
-    logoPrefix: "YBF",
-    /** e.g. "FITNESS" — rendered in the accent color */
+    logoPrefix: "DEEGAN",
     logoAccent: "FITNESS",
-    adminLogoPrefix: "YBF",
+    adminLogoPrefix: "DEEGAN",
     adminLogoAccent: "ADMIN",
-    dashboardLogoPrefix: "YBF",
+    dashboardLogoPrefix: "DEEGAN",
     dashboardLogoAccent: "Fitness",
   },
 
-  // ─── Hero Section (Landing Page) ─────────────────────────────────────────────
+  // ─── Hero Section ────────────────────────────────────────────────────────────
   hero: {
-    /** Label above Trainer A in the hero split (e.g. "His") */
-    trainerALabel: "His",
-    /** Label above Trainer B in the hero split (e.g. "Hers") */
-    trainerBLabel: "Hers",
-    centerBadgeTop: "YBF",
-    centerBadgeBottom: "Fitness",
-    ctaTrainerA: "His Programs",
-    ctaTrainerB: "Her Programs",
-    /** Quote in the testimonial strip below the hero */
+    headline: "TRAIN LIKE DEEGAN",
+    subheadline: "The exact regiment that built a two-time champion.",
+    ctaLabel: "Start Training — $19.99/mo",
+    ctaSecondaryLabel: "See the Program",
+    heroImage: "/images/deegan/deegan-hero-poster.jpg",
+    heroVideo: "/videos/braap_hero.mp4",
+    /** Featured quote below the hero */
     featuredQuote:
-      "This program broke me down and built me back up in the best way possible.",
-    featuredQuoteAuthor: "Jake M.",
-    featuredQuoteProgram: "30-Day Challenge",
+      "50 miles on the bike. 2 hours on the track. Hour and a half in the gym. Every single day.",
+    featuredQuoteAuthor: "Haiden Deegan",
+    featuredQuoteProgram: "Daily Regiment",
   },
 
-  // ─── Trainers ────────────────────────────────────────────────────────────────
-  // Internal slugs used in URLs, DB, and Stripe env vars:
-  //   trainerA, trainerB, couples
-  // Change these slugs project-wide if you prefer different identifiers.
-  trainers: {
-    trainerA: {
-      name: "Trainer A Name",
-      firstName: "TrainerA",
-      specialty: "Strength & Conditioning",
-      handle: "@trainera",
-      photo: "/images/trainerA.jpg",
-      bioPhoto: "/images/trainerA-bio.jpg",
-      bio: "Trainer A biography goes here. Replace with your trainer's story, background, and credentials. This appears on the landing page trainer section.",
-      quotes: [
-        "Every rep counts. Every day matters.",
-        "Discipline beats motivation.",
-        "No shortcuts. Just work.",
-        "Show up. Put in the work.",
-        "Consistency beats intensity.",
-        "Your future self is watching.",
-        "The pain today is strength tomorrow.",
-      ],
-      gradient: "linear-gradient(135deg, #2e3a1e, #C8A800)",
-    } satisfies TrainerConfig,
+  // ─── Proof Bar (Stats) ──────────────────────────────────────────────────────
+  stats: [
+    { value: "2×", label: "SMX Champion" },
+    { value: "1.5M", label: "Instagram" },
+    { value: "210", label: "Avg Peak BPM" },
+    { value: "200+", label: "Miles/Week" },
+  ] satisfies StatConfig[],
 
-    trainerB: {
-      name: "Trainer B Name",
-      firstName: "TrainerB",
-      specialty: "Sculpt & Tone",
-      handle: "@trainerb",
-      photo: "/images/trainerB.jpg",
-      bioPhoto: "/images/trainerB-bio.jpg",
-      bio: "Trainer B biography goes here. Replace with your trainer's story, background, and credentials. This appears on the landing page trainer section.",
-      quotes: [
-        "Strong is beautiful.",
-        "Your body can do it — convince your mind.",
-        "Sweat now, glow later.",
-        "One workout at a time.",
-        "You didn't come this far to only come this far.",
-        "Feel the burn, love the result.",
-        "Progress over perfection.",
-      ],
-      gradient: "linear-gradient(135deg, #4a1a2e, #C8A800)",
-    } satisfies TrainerConfig,
-
-    couples: {
-      name: "Trainer A & Trainer B",
-      firstName: "Both",
-      specialty: "Together",
-      handle: "@yourbrand",
-      photo: "/images/trainerA.jpg", // not used directly for couples hero
-      bio: "",
-      quotes: [
-        "Better together. Stronger together.",
-        "The couple that trains together stays together.",
-        "Push each other. Support each other.",
-        "Two bodies, one mission.",
-        "Your partner is your greatest accountability partner.",
-        "21 days. Side by side.",
-        "You signed up together. Now finish together.",
-      ],
-      gradient: "linear-gradient(135deg, #1a2e4a, #C8A800)",
-    } satisfies TrainerConfig,
+  // ─── Trainer ─────────────────────────────────────────────────────────────────
+  trainer: {
+    name: "Haiden Deegan",
+    firstName: "Haiden",
+    age: 19,
+    hometown: "Temecula, CA",
+    specialty: "Motocross & Supercross",
+    handle: "@haidendeegan",
+    photo: "/images/deegan/deegan-portrait.jpg",
+    bioPhoto: "/images/deegan/deegan-1.jpg",
+    heroPhoto: "/images/deegan/deegan-hero-poster.jpg",
+    stadiumPhoto: "/images/deegan/deegan-sx-1.jpg",
+    bio: "Two-time 250cc SuperMotocross Champion. Two-time AMA Motocross 250cc Champion. 2025 AMA Supercross 250cc West Champion. At 19, Haiden Deegan is the most dominant young rider in motocross — and his edge isn't just talent. It's the regiment. 50 miles on the road bike. 2 hours on the track. An hour and a half in the gym. Every single day. Now you can train the same way.",
+    titles: [
+      "2× 250cc SMX Champion",
+      "2× AMA Motocross 250cc Champion",
+      "2025 AMA Supercross 250cc West Champion",
+    ],
+    team: "Monster Energy Yamaha Star Racing",
+    quotes: [
+      "The bike doesn't lie. You either put the work in or you didn't.",
+      "50 miles before most people wake up.",
+      "Recovery isn't rest. Recovery is preparation.",
+      "Heart rate doesn't care about excuses.",
+      "Race week doesn't start Saturday. It starts Monday.",
+      "You can't fake fitness on race day.",
+      "The regiment is the edge.",
+    ],
+    gradient: "linear-gradient(135deg, #0A0A0A, #00D26A)",
+  } satisfies TrainerConfig & {
+    age: number;
+    hometown: string;
+    titles: string[];
+    team: string;
+    heroPhoto: string;
+    stadiumPhoto: string;
   },
 
-  // ─── Programs (One-Time Purchases) ───────────────────────────────────────────
-  // Keys match the pattern: {trainerSlug}-{tier}
-  programs: {
-    "trainerA-30": {
-      name: "30-Day Strength Challenge",
-      price: 49.99,
-      priceFormatted: "$49.99",
-      priceDollars: "$49",
-      priceCents: ".99",
-      description: "30 days of no-nonsense strength & conditioning.",
-      checkoutDescription:
-        "Build the habit. 30 days of strength & conditioning to kickstart your transformation.",
-      checkoutFeatures: [
-        "30-day structured plan",
-        "Day-by-day workouts",
-        "Exercise video library",
-        "Progress tracking",
-        "Yours to keep",
-      ],
-      cardFeatures: [
-        "30 days of strength training",
-        "Strength & conditioning workouts",
-        "Exercise video library",
-        "Progress tracking",
-        "Yours to keep",
-      ],
-      durationLabel: "30 Days",
-      totalDays: 30,
-    } satisfies ProgramConfig,
-
-    "trainerA-60": {
-      name: "60-Day Strength Challenge",
-      price: 69.99,
-      priceFormatted: "$69.99",
-      priceDollars: "$69",
-      priceCents: ".99",
-      description: "60-day muscle building program.",
-      checkoutDescription: "60 days of progressive strength training.",
-      checkoutFeatures: [],
-      cardFeatures: [],
-      durationLabel: "60 Days",
-      totalDays: 60,
-    } satisfies ProgramConfig,
-
-    "trainerA-90": {
-      name: "90-Day Strength Challenge",
-      price: 89.99,
-      priceFormatted: "$89.99",
-      priceDollars: "$89",
-      priceCents: ".99",
-      description: "90-day total body transformation.",
-      checkoutDescription: "90 days of total body transformation.",
-      checkoutFeatures: [],
-      cardFeatures: [],
-      durationLabel: "90 Days",
-      totalDays: 90,
-    } satisfies ProgramConfig,
-
-    "trainerB-30": {
-      name: "30-Day Sculpt Challenge",
-      price: 49.99,
-      priceFormatted: "$49.99",
-      priceDollars: "$49",
-      priceCents: ".99",
-      description: "30 days of sculpt & tone training.",
-      checkoutDescription:
-        "30 days of sculpt-focused training to build curves and boost confidence.",
-      checkoutFeatures: [
-        "30-day structured plan",
-        "Day-by-day workouts",
-        "Exercise video library",
-        "Progress tracking",
-        "Yours to keep",
-      ],
-      cardFeatures: [
-        "30 days of sculpt & tone training",
-        "Glute-focused programs",
-        "Exercise video library",
-        "Progress tracking",
-        "Yours to keep",
-      ],
-      durationLabel: "30 Days",
-      totalDays: 30,
-    } satisfies ProgramConfig,
-
-    "trainerB-60": {
-      name: "60-Day Sculpt Challenge",
-      price: 69.99,
-      priceFormatted: "$69.99",
-      priceDollars: "$69",
-      priceCents: ".99",
-      description: "60-day sculpt & burn program.",
-      checkoutDescription: "60 days of progressive sculpt training.",
-      checkoutFeatures: [],
-      cardFeatures: [],
-      durationLabel: "60 Days",
-      totalDays: 60,
-    } satisfies ProgramConfig,
-
-    "trainerB-90": {
-      name: "90-Day Sculpt Challenge",
-      price: 89.99,
-      priceFormatted: "$89.99",
-      priceDollars: "$89",
-      priceCents: ".99",
-      description: "90-day full body transformation.",
-      checkoutDescription: "90 days of full body sculpt transformation.",
-      checkoutFeatures: [],
-      cardFeatures: [],
-      durationLabel: "90 Days",
-      totalDays: 90,
-    } satisfies ProgramConfig,
-
-    "couples-ab": {
-      name: "Couples AB Challenge",
-      price: 29.99,
-      priceFormatted: "$29.99",
-      priceDollars: "$29",
-      priceCents: ".99",
-      description: "21 days of daily core work for two.",
-      checkoutDescription:
-        "21 days of daily core work designed for two. Same workout, done together — the perfect way to start your fitness journey as a couple.",
-      checkoutFeatures: [
-        "21-day core program",
-        "Do it side-by-side every day",
-        "Beginner-friendly & scalable",
-        "Exercise video library",
-        "Yours to keep",
-      ],
-      cardFeatures: [
-        "21-day core program for two",
-        "Do it side-by-side, every day",
-        "Beginner-friendly & scalable",
-        "Exercise video library",
-        "Yours to keep",
-      ],
-      durationLabel: "21 Days",
-      totalDays: 21,
-    } satisfies ProgramConfig,
-  },
-
-  // ─── Subscriptions ───────────────────────────────────────────────────────────
-  subscriptions: {
-    monthly: {
-      displayName: "Monthly Challenge",
-      price: 39.99,
-      priceFormatted: "$39.99",
-      priceDollars: "$39",
-      priceCents: ".99",
-      description:
-        "A fresh challenge every month. Full access to all programs.",
+  // ─── Training Levels ─────────────────────────────────────────────────────────
+  levels: {
+    rookie: {
+      id: "rookie",
+      name: "Rookie",
+      emoji: "🟢",
+      description: "Getting started. Build the engine before you race it.",
+      cyclingMiles: 15,
+      motoHours: 0.75,
+      gymHours: 0.75,
       features: [
-        "Rotating monthly challenge from both trainers",
-        "Full access to all programs",
-        "Exercise video library",
-        "Progress tracking",
-        "Cancel anytime",
+        "15-mile daily road ride",
+        "45-min moto practice",
+        "45-min gym session",
+        "HR zone guidance",
+        "Race week schedule",
+        "Recovery programming",
       ],
-      pillLabel: "$39.99/mo · Cancel anytime",
-    } satisfies SubscriptionConfig,
+    } satisfies TrainingLevel,
 
-    vip: {
-      displayName: "VIP",
-      price: 199.99,
-      priceFormatted: "$199.99",
-      priceDollars: "$199",
-      priceCents: ".99",
-      description:
-        "The full experience. Everything in Monthly Challenge plus live coaching.",
+    "pro-am": {
+      id: "pro-am",
+      name: "Pro Am",
+      emoji: "🟡",
+      description: "Serious riders. Serious work. Halfway to factory.",
+      cyclingMiles: 30,
+      motoHours: 1.5,
+      gymHours: 1,
       features: [
-        "Everything in Monthly Challenge",
-        "Monthly live Q&A with Trainer A",
-        "Monthly live Q&A with Trainer B",
-        "Private coaching community",
-        "VIP-only content drops",
-        "Cancel anytime",
+        "30-mile daily road ride",
+        "1.5-hr moto practice",
+        "1-hr gym session",
+        "HR zone targets per workout",
+        "Race week periodization",
+        "Active recovery protocols",
       ],
-      pillLabel: "$199.99/mo · Cancel anytime",
-    } satisfies SubscriptionConfig,
+    } satisfies TrainingLevel,
+
+    factory: {
+      id: "factory",
+      name: "Factory",
+      emoji: "🔴",
+      description: "Haiden's actual regiment. No shortcuts. No excuses.",
+      cyclingMiles: 50,
+      motoHours: 2,
+      gymHours: 1.5,
+      features: [
+        "50-mile daily road ride",
+        "2-hr moto practice",
+        "1.5-hr gym session",
+        "Exact HR zone targets",
+        "Haiden's race-week structure",
+        "Benchmark against Haiden's stats",
+      ],
+    } satisfies TrainingLevel,
   },
 
-  // ─── Testimonials ────────────────────────────────────────────────────────────
-  testimonials: {
-    /** Landing page testimonial cards */
-    landing: [
-      {
-        quote:
-          "The structure kept me accountable every single day — I dropped 14 lbs and actually kept it off.",
-        name: "Jake M.",
-        result: "Lost 14 lbs in 30 days",
-        program: "30-Day Challenge",
-      },
-      {
-        quote:
-          "Started with the Couples AB Challenge to ease into it. Three weeks later we were both hooked.",
-        name: "Chris & Taylor",
-        result: "Core strength in 21 days",
-        program: "Couples AB Challenge",
-      },
-      {
-        quote:
-          "The program is exactly what it promises — sculpt and tone. My results have never been better. The exercise videos make it easy to follow.",
-        name: "Ashley R.",
-        result: "Visible tone in 30 days",
-        program: "30-Day Sculpt Challenge",
-      },
-    ] satisfies TestimonialConfig[],
+  // ─── Weekly Regiment Structure ───────────────────────────────────────────────
+  weekSchedule: [
+    {
+      day: "Monday",
+      type: "training",
+      label: "FULL SEND",
+      description: "Road bike + Moto + Gym — the full regiment",
+    },
+    {
+      day: "Tuesday",
+      type: "training",
+      label: "FULL SEND",
+      description: "Road bike + Moto + Gym — build on yesterday",
+    },
+    {
+      day: "Wednesday",
+      type: "training",
+      label: "FULL SEND",
+      description: "Road bike + Moto + Gym — midweek push",
+    },
+    {
+      day: "Thursday",
+      type: "travel",
+      label: "TRAVEL / TRAIN",
+      description: "Travel day on race weeks — gym + mobility if home",
+    },
+    {
+      day: "Friday",
+      type: "travel",
+      label: "TRAVEL / PREP",
+      description: "Pre-race prep on race weeks — light session if home",
+    },
+    {
+      day: "Saturday",
+      type: "race",
+      label: "RACE DAY",
+      description: "Race or full training day if off-week",
+    },
+    {
+      day: "Sunday",
+      type: "recovery",
+      label: "RECOVER",
+      description: "Active recovery — mobility, stretching, rest",
+    },
+  ] satisfies WeekDay[],
 
-    /** Per-program checkout testimonials. Keys match program keys. */
-    checkout: {
-      "trainerA-30": {
-        quote:
-          "The 30-day program got me into the best shape of my life. Worth every penny.",
-        name: "Jake M.",
-        result: "Lost 12 lbs",
-      },
-      "trainerB-30": {
-        quote:
-          "The 30-day program is no joke. My results have never been better.",
-        name: "Ashley R.",
-        result: "Visible muscle tone",
-      },
-      "couples-ab": {
-        quote:
-          "We did the Couples AB Challenge every morning before work. Three weeks later, we both had visible abs for the first time. Doing the next one together.",
-        name: "Chris & Taylor",
-        result: "Both got visible abs in 21 days",
-      },
-    } as Record<string, Omit<TestimonialConfig, "program">>,
+  // ─── Heart Rate Zones ────────────────────────────────────────────────────────
+  hrZones: [
+    {
+      zone: 1,
+      name: "Recovery",
+      minPct: 50,
+      maxPct: 60,
+      description: "Easy effort. Warm-up, cool-down, active recovery.",
+      color: "#808080",
+    },
+    {
+      zone: 2,
+      name: "Endurance",
+      minPct: 60,
+      maxPct: 70,
+      description: "Aerobic base. Long road rides live here.",
+      color: "#00D26A",
+    },
+    {
+      zone: 3,
+      name: "Tempo",
+      minPct: 70,
+      maxPct: 80,
+      description: "Sustained effort. Moto practice pace.",
+      color: "#FFD700",
+    },
+    {
+      zone: 4,
+      name: "Threshold",
+      minPct: 80,
+      maxPct: 90,
+      description: "Race pace. Where champions are made.",
+      color: "#FF6B00",
+    },
+    {
+      zone: 5,
+      name: "Redline",
+      minPct: 90,
+      maxPct: 100,
+      description: "Max effort. Sprint finishes. Holeshots.",
+      color: "#FF0000",
+    },
+  ] satisfies HRZone[],
+
+  // ─── Haiden's Benchmark Stats ────────────────────────────────────────────────
+  benchmarks: {
+    weeklyMiles: 200,
+    dailyCyclingMiles: 50,
+    dailyMotoHours: 2,
+    dailyGymHours: 1.5,
+    peakHR: 210,
+    restingHR: 42,
+    avgRideHR: 145,
+    avgMotoHR: 175,
+    avgGymHR: 155,
   },
 
-  // ─── Training Reels (Landing Page Video Section) ─────────────────────────────
+  // ─── Subscription ────────────────────────────────────────────────────────────
+  subscription: {
+    displayName: "Train Like Deegan",
+    price: 19.99,
+    priceFormatted: "$19.99",
+    priceDollars: "$19",
+    priceCents: ".99",
+    description:
+      "Haiden's full training regiment — all 3 levels, HR zone training, benchmark tracking, and race-week programming.",
+    features: [
+      "All 3 training levels (Rookie / Pro Am / Factory)",
+      "Weekly programming that follows the race season",
+      "Heart rate zone training guides",
+      "Garmin & Polar watch sync",
+      "Benchmark your stats against Haiden's",
+      "Community leaderboard",
+      "Race-week schedule adjustments",
+      "Cancel anytime",
+    ],
+    pillLabel: "$19.99/mo · Cancel anytime",
+  } satisfies SubscriptionConfig,
+
+  // ─── Wearable Integration ───────────────────────────────────────────────────
+  wearables: {
+    garmin: {
+      name: "Garmin",
+      logo: "/images/garmin-logo.svg",
+      apiName: "Garmin Connect",
+      oauthType: "OAuth2 PKCE",
+      dataPoints: ["heart_rate", "activities", "daily_summary", "stress"],
+    },
+    polar: {
+      name: "Polar",
+      logo: "/images/polar-logo.svg",
+      apiName: "Polar AccessLink",
+      oauthType: "OAuth2",
+      dataPoints: ["heart_rate", "activities", "training_load", "recovery"],
+    },
+  },
+
+  // ─── Reels / Videos ──────────────────────────────────────────────────────────
   reels: [
     {
-      src: "/videos/trainerA-workout.mp4",
-      specialty: "Strength & Conditioning",
-      name: "Trainer A",
-    },
-    {
-      src: "/videos/workout3.mp4",
-      specialty: "Together",
-      name: "Trainer A & Trainer B",
-    },
-    {
-      src: "/videos/trainerB-workout.mp4",
-      specialty: "Sculpt & Tone",
-      name: "Trainer B",
+      src: "/videos/braap_hero.mp4",
+      specialty: "Motocross",
+      name: "Haiden Deegan",
     },
   ] satisfies ReelConfig[],
 
   // ─── Social ──────────────────────────────────────────────────────────────────
   social: {
-    instagramHandle: "@yourbrand",
+    instagramHandle: "@haidendeegan",
+    tiktokHandle: "@haidendeegan",
+    youtubeHandle: "@DangerBoyDeegan",
   },
 
   // ─── Theme Colors ────────────────────────────────────────────────────────────
-  // These are also defined in globals.css as CSS custom properties.
-  // Update both places when changing brand colors.
+  // Monster Energy green + dark MX aesthetic
   colors: {
-    gold: "#C8A800",
-    goldDark: "#a88c00",
-    army: "#2e3a1e",
-    armyLight: "#3d4d28",
-    /** Email accent color */
-    emailAccent: "#c9a84c",
-    emailDarkBg: "#0a0a0a",
+    /** Primary accent — Monster Energy green */
+    primary: "#00D26A",
+    primaryDark: "#00A854",
+    /** Background — near-black */
+    background: "#0A0A0A",
+    backgroundCard: "#111111",
+    backgroundElevated: "#1A1A1A",
+    /** Text */
+    textPrimary: "#FFFFFF",
+    textSecondary: "#A0A0A0",
+    textMuted: "#666666",
+    /** Borders */
+    border: "#222222",
+    borderLight: "#333333",
+    /** HR Zone colors (also defined in hrZones above) */
+    zoneRecovery: "#808080",
+    zoneEndurance: "#00D26A",
+    zoneTempo: "#FFD700",
+    zoneThreshold: "#FF6B00",
+    zoneRedline: "#FF0000",
+    /** Email */
+    emailAccent: "#00D26A",
+    emailDarkBg: "#0A0A0A",
     emailCardBg: "#111111",
     emailBorder: "#222222",
     emailMuted: "#888888",
-    discordBrandColor: "#5865F2",
   },
 
   // ─── Legal ───────────────────────────────────────────────────────────────────
   legal: {
-    entityName: "Your Brand Fitness",
+    entityName: "Deegan Fitness",
   },
 } as const;
 
 // ── Derived helpers ──────────────────────────────────────────────────────────
 
-/** Internal trainer slugs — matches DB `trainer` column values */
-export type Trainer = "trainerA" | "trainerB" | "couples";
-export type Tier = "30" | "60" | "90" | "ab";
-export type SubscriptionPlan = "monthly" | "vip";
+export type TrainingLevelId = "rookie" | "pro-am" | "factory";
 
-/** Look up a trainer config by slug */
-export function getTrainerConfig(slug: string): TrainerConfig | undefined {
-  return (brand.trainers as Record<string, TrainerConfig>)[slug];
+/** Look up a training level config */
+export function getLevelConfig(id: string): TrainingLevel | undefined {
+  return (brand.levels as Record<string, TrainingLevel>)[id];
 }
 
-/** Look up a program config by "{trainer}-{tier}" key */
-export function getProgramConfig(
-  trainer: string,
-  tier: string,
-): ProgramConfig | undefined {
-  return (brand.programs as Record<string, ProgramConfig>)[`${trainer}-${tier}`];
+/** Calculate personal HR zones based on max heart rate */
+export function calculateHRZones(maxHR: number) {
+  return brand.hrZones.map((zone) => ({
+    ...zone,
+    minBPM: Math.round(maxHR * (zone.minPct / 100)),
+    maxBPM: Math.round(maxHR * (zone.maxPct / 100)),
+  }));
 }
 
-/** Trainer name lookup map — useful for quick label lookups */
-export const TRAINER_LABELS: Record<string, string> = {
-  trainerA: brand.trainers.trainerA.name,
-  trainerB: brand.trainers.trainerB.name,
-  couples: brand.trainers.couples.name,
-};
-
-/** Tier label lookup */
-export const TIER_LABELS: Record<string, string> = {
-  "30": "30-Day Challenge",
-  "60": "60-Day Challenge",
-  "90": "90-Day Challenge",
-  ab: "Couples AB Challenge",
+/** Level labels for quick lookup */
+export const LEVEL_LABELS: Record<string, string> = {
+  rookie: "Rookie",
+  "pro-am": "Pro Am",
+  factory: "Factory",
 };
