@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { InstallPrompt } from "@/app/components/install-prompt";
-import { User, Trophy } from "lucide-react";
+import { User, Trophy, CalendarDays } from "lucide-react";
 import { brand } from "@/config/brand";
 
 export default function DashboardLayout({
@@ -21,6 +21,13 @@ export default function DashboardLayout({
             {brand.nav.dashboardLogoPrefix} <span className="text-primary">{brand.nav.dashboardLogoAccent}</span>
           </Link>
           <div className="flex items-center gap-2">
+            <Link
+              href="/dashboard/program"
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:bg-card transition"
+              aria-label="Program"
+            >
+              <CalendarDays className="w-4 h-4 text-primary" />
+            </Link>
             <Link
               href="/dashboard/challenge"
               className="w-9 h-9 flex items-center justify-center rounded-full border border-white/10 hover:bg-card transition"

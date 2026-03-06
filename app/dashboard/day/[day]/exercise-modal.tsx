@@ -14,6 +14,8 @@ interface Exercise {
   thumbnail_url: string | null;
   notes: string | null;
   order_index: number;
+  block: string | null;
+  hr_zone: number | null;
 }
 
 interface ExerciseModalProps {
@@ -25,6 +27,14 @@ interface ExerciseModalProps {
   onNext: () => void;
 }
 
+const BLOCK_CONFIG: Record<string, { emoji: string; label: string; color: string }> = {
+  cycling: { emoji: "🚴", label: "Road Ride", color: "#29F000" },
+  moto: { emoji: "🏍️", label: "Moto Practice", color: "#FF6B00" },
+  gym: { emoji: "🏋️", label: "Gym Session", color: "#FFD700" },
+  recovery: { emoji: "🧘", label: "Recovery", color: "#808080" },
+  race: { emoji: "🏁", label: "Race Day", color: "#FF0000" },
+};
+
 export function ExerciseModal({
   exercises,
   currentIndex,
@@ -35,6 +45,9 @@ export function ExerciseModal({
   const exercise = exercises[currentIndex];
   const videoRef = useRef<HTMLVideoElement>(null);
   const total = exercises.length;
+
+  const blockConfig = BLOCK_CONFIG[exercise.block || "gym"] || BLOCK_CONFIG.gym;
+  const hrZone = exercise.hr_zone ? brand.hrZones.find((z) => z.zone === exercise.hr_zone) : null;
 
   useEffect(() => {
     if (videoRef.current) {
@@ -92,8 +105,41 @@ export function ExerciseModal({
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0 px-5 pt-4 pb-2">
-        <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">{brand.trainer.name}</p>
+        {/* Block label */}
+        <div className="flex items-center gap-2 mb-1">
+          <span
+            className="text-xs font-bold px-2 py-0.5 rounded-full"
+            style={{ backgroundColor: `${blockConfig.color}20`, color: blockConfig.color }}
+          >
+            {blockConfig.emoji} {blockConfig.label}
+          </span>
+          {hrZone && (
+            <span
+              className="text-xs font-bold px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: `${hrZone.color}20`, color: hrZone.color }}
+            >
+              Zone {hrZone.zone} · {hrZone.name}
+            </span>
+          )}
+        </div>
+
+        <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1 mt-2">{brand.trainer.name}</p>
         <h2 className="text-2xl font-bold text-white leading-tight mb-4">{exercise.name}</h2>
+
+        {/* HR Zone indicator bar */}
+        {hrZone && (
+          <div className="mb-4 rounded-lg overflow-hidden">
+            <div className="h-1.5 w-full bg-white/5 rounded-full">
+              <div
+                className="h-full rounded-full transition-all"
+                style={{ width: `${hrZone.maxPct}%`, backgroundColor: hrZone.color }}
+              />
+            </div>
+            <p className="text-[10px] mt-1" style={{ color: hrZone.color }}>
+              {hrZone.minPct}–{hrZone.maxPct}% max HR · {hrZone.description}
+            </p>
+          </div>
+        )}
 
         {hasMetrics && (
           <div className="flex gap-3 mb-4">
@@ -104,13 +150,13 @@ export function ExerciseModal({
               </div>
             )}
             {exercise.reps && (
-              <div className="flex-1 rounded-2xl px-3 py-3 text-center" style={{ background: "rgba(0,210,106,0.12)", border: "1px solid rgba(0,210,106,0.25)" }}>
+              <div className="flex-1 rounded-2xl px-3 py-3 text-center" style={{ background: "rgba(41,240,0,0.12)", border: "1px solid rgba(41,240,0,0.25)" }}>
                 <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Reps</p>
                 <p className="text-3xl font-bold text-white">{exercise.reps}</p>
               </div>
             )}
             {exercise.duration && (
-              <div className="flex-1 rounded-2xl px-3 py-3 text-center" style={{ background: "rgba(0,210,106,0.12)", border: "1px solid rgba(0,210,106,0.25)" }}>
+              <div className="flex-1 rounded-2xl px-3 py-3 text-center" style={{ background: "rgba(41,240,0,0.12)", border: "1px solid rgba(41,240,0,0.25)" }}>
                 <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Time</p>
                 <p className="text-3xl font-bold text-white">{exercise.duration}</p>
               </div>

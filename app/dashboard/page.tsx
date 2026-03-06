@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Bike, Timer, Dumbbell, Trophy, ChevronRight } from "lucide-react";
+import { Bike, Timer, Dumbbell, Trophy, ChevronRight, ArrowRight } from "lucide-react";
 import { brand } from "@/config/brand";
 import Link from "next/link";
 
@@ -64,6 +64,8 @@ export default async function DashboardPage() {
   }
 
   const today = new Date();
+  const dayOfMonth = today.getDate();
+  const todayDayNumber = Math.min(dayOfMonth, 30);
   const dayOfWeek = today.getDay();
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const todaySchedule = brand.weekSchedule.find((d) => d.day === dayNames[dayOfWeek]) ?? brand.weekSchedule[0];
@@ -173,6 +175,17 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      {/* View Today's Workout */}
+      <Link
+        href={`/dashboard/day/${todayDayNumber}`}
+        className="block w-full bg-primary text-black text-center py-3.5 rounded-2xl font-bold text-sm tracking-wider uppercase hover:bg-primary-dark transition"
+      >
+        <span className="flex items-center justify-center gap-2">
+          View Today&apos;s Workout — Day {todayDayNumber}
+          <ArrowRight className="w-4 h-4" />
+        </span>
+      </Link>
+
       {/* HR Zone Targets */}
       {todaySchedule.type === "training" && (
         <div className="bg-card border border-white/10 rounded-2xl p-5">
@@ -220,21 +233,25 @@ export default async function DashboardPage() {
       <div className="bg-card border border-white/10 rounded-2xl p-5">
         <h3 className="font-bold text-sm uppercase tracking-wider text-muted mb-4">This Week</h3>
         <div className="grid grid-cols-7 gap-1.5">
-          {brand.weekSchedule.map((day) => {
+          {brand.weekSchedule.map((day, idx) => {
             const isToday = day.day === dayNames[dayOfWeek];
+            // Calculate which day_number this weekday maps to
+            const dayOffset = idx - (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+            const linkedDayNumber = Math.min(30, Math.max(1, todayDayNumber + dayOffset));
             return (
-              <div
+              <Link
                 key={day.day}
-                className={`text-center py-2 rounded-lg text-xs ${
+                href={`/dashboard/day/${linkedDayNumber}`}
+                className={`text-center py-2 rounded-lg text-xs transition hover:opacity-80 ${
                   isToday
                     ? day.type === "training" ? "bg-primary/20 text-primary border border-primary/30" :
                       day.type === "race" ? "bg-zone-redline/20 text-zone-redline border border-zone-redline/30" :
                       "bg-white/10 text-white border border-white/20"
-                    : "bg-card-elevated text-muted-dark"
+                    : "bg-card-elevated text-muted-dark hover:bg-card-elevated/80"
                 }`}
               >
                 <p className="font-bold">{day.day.slice(0, 1)}</p>
-              </div>
+              </Link>
             );
           })}
         </div>

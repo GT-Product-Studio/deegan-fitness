@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { MarkCompleteButton } from "./mark-complete-button";
 import { ExerciseList } from "./exercise-list";
 
@@ -58,16 +58,51 @@ export default async function DayPage({
 
   const isCompleted = !!progressEntry;
 
+  const hasPrev = dayNumber > 1;
+  const hasNext = dayNumber < 30;
+
   return (
     <div className="space-y-6 pb-24">
       <div>
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-1.5 text-sm text-muted hover:text-white transition mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Dashboard
-        </Link>
+        <div className="flex items-center justify-between mb-4">
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-1.5 text-sm text-muted hover:text-white transition"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </Link>
+          <div className="flex items-center gap-2">
+            {hasPrev ? (
+              <Link
+                href={`/dashboard/day/${dayNumber - 1}`}
+                className="flex items-center gap-1 text-sm text-muted hover:text-primary border border-white/10 hover:border-primary/30 rounded-lg px-3 py-1.5 transition"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Day {dayNumber - 1}
+              </Link>
+            ) : (
+              <span className="flex items-center gap-1 text-sm text-muted/30 border border-white/5 rounded-lg px-3 py-1.5 cursor-not-allowed">
+                <ChevronLeft className="w-4 h-4" />
+                Prev
+              </span>
+            )}
+            {hasNext ? (
+              <Link
+                href={`/dashboard/day/${dayNumber + 1}`}
+                className="flex items-center gap-1 text-sm text-muted hover:text-primary border border-white/10 hover:border-primary/30 rounded-lg px-3 py-1.5 transition"
+              >
+                Day {dayNumber + 1}
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            ) : (
+              <span className="flex items-center gap-1 text-sm text-muted/30 border border-white/5 rounded-lg px-3 py-1.5 cursor-not-allowed">
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </span>
+            )}
+          </div>
+        </div>
 
         <div className="flex items-center gap-2 mb-1">
           <span className="text-xs font-bold text-primary uppercase tracking-wider">
@@ -89,6 +124,32 @@ export default async function DayPage({
         exercises={exercises || []}
         trainer="deegan"
       />
+
+      {/* Bottom day navigation */}
+      <div className="flex items-center justify-between pt-4 border-t border-white/10">
+        {hasPrev ? (
+          <Link
+            href={`/dashboard/day/${dayNumber - 1}`}
+            className="flex items-center gap-1.5 text-sm text-muted hover:text-primary transition"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Day {dayNumber - 1}
+          </Link>
+        ) : (
+          <span />
+        )}
+        {hasNext ? (
+          <Link
+            href={`/dashboard/day/${dayNumber + 1}`}
+            className="flex items-center gap-1.5 text-sm text-muted hover:text-primary transition"
+          >
+            Day {dayNumber + 1}
+            <ChevronRight className="w-4 h-4" />
+          </Link>
+        ) : (
+          <span />
+        )}
+      </div>
 
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-white/10 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:hidden">
         <div className="max-w-lg mx-auto">

@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     description: brand.description,
     url: brand.domain,
     siteName: brand.name,
-    images: [{ url: "/images/deegan/deegan-hero-poster.jpg", width: 1200, height: 630, alt: brand.name }],
+    images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: brand.name }],
     locale: "en_US",
     type: "website",
   },
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: fullTitle,
     description: brand.description,
-    images: ["/images/deegan/deegan-hero-poster.jpg"],
+    images: ["/images/og-image.jpg"],
   },
 };
 
