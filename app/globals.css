@@ -3,8 +3,8 @@
 @theme inline {
   --color-background: #0A0A0A;
   --color-foreground: #ffffff;
-  --color-primary: #00D26A;
-  --color-primary-dark: #00A854;
+  --color-primary: #29F000;
+  --color-primary-dark: #22D400;
   --color-card: #111111;
   --color-card-elevated: #1A1A1A;
   --color-card-border: #222222;
@@ -12,7 +12,7 @@
   --color-muted: #A0A0A0;
   --color-muted-dark: #666666;
   --color-zone-recovery: #808080;
-  --color-zone-endurance: #00D26A;
+  --color-zone-endurance: #29F000;
   --color-zone-tempo: #FFD700;
   --color-zone-threshold: #FF6B00;
   --color-zone-redline: #FF0000;

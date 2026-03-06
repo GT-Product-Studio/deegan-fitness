@@ -153,7 +153,7 @@ export const brand = {
       "You can't fake fitness on race day.",
       "The regiment is the edge.",
     ],
-    gradient: "linear-gradient(135deg, #0A0A0A, #00D26A)",
+    gradient: "linear-gradient(135deg, #0A0A0A, #29F000)",
   } satisfies TrainerConfig & {
     age: number;
     hometown: string;
@@ -244,7 +244,7 @@ export const brand = {
       minPct: 60,
       maxPct: 70,
       description: "Aerobic base. Long road rides live here.",
-      color: "#00D26A",
+      color: "#29F000",
     },
     {
       zone: 3,
@@ -345,8 +345,8 @@ export const brand = {
   // Monster Energy green + dark MX aesthetic
   colors: {
     /** Primary accent — Monster Energy green */
-    primary: "#00D26A",
-    primaryDark: "#00A854",
+    primary: "#29F000",
+    primaryDark: "#22D400",
     /** Background — near-black */
     background: "#0A0A0A",
     backgroundCard: "#111111",
@@ -360,12 +360,12 @@ export const brand = {
     borderLight: "#333333",
     /** HR Zone colors (also defined in hrZones above) */
     zoneRecovery: "#808080",
-    zoneEndurance: "#00D26A",
+    zoneEndurance: "#29F000",
     zoneTempo: "#FFD700",
     zoneThreshold: "#FF6B00",
     zoneRedline: "#FF0000",
     /** Email */
-    emailAccent: "#00D26A",
+    emailAccent: "#29F000",
     emailDarkBg: "#0A0A0A",
     emailCardBg: "#111111",
     emailBorder: "#222222",
