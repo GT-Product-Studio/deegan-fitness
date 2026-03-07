@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ExerciseModal } from "./exercise-modal";
 import { brand } from "@/config/brand";
+import { BlockStats, type ActivityLog } from "./block-stats";
 
 interface Exercise {
   id: string;
@@ -19,6 +20,7 @@ interface Exercise {
 interface ExerciseListProps {
   exercises: Exercise[];
   trainer: string;
+  activityLogs?: ActivityLog[];
 }
 
 const BLOCK_CONFIG: Record<string, { emoji: string; label: string; accent: string; border: string }> = {
@@ -33,7 +35,7 @@ function getHRZone(zoneNum: number) {
   return brand.hrZones.find((z) => z.zone === zoneNum);
 }
 
-export function ExerciseList({ exercises, trainer }: ExerciseListProps) {
+export function ExerciseList({ exercises, trainer, activityLogs = [] }: ExerciseListProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   // Group exercises by block
@@ -65,6 +67,11 @@ export function ExerciseList({ exercises, trainer }: ExerciseListProps) {
                 </h3>
                 <span className="text-xs text-muted ml-auto">{blockExercises.length} exercise{blockExercises.length !== 1 ? "s" : ""}</span>
               </div>
+
+              {/* Synced wearable stats for this block */}
+              {activityLogs.length > 0 && (
+                <BlockStats block={block} activities={activityLogs} />
+              )}
 
               <div className="space-y-4">
                 {blockExercises.map(({ exercise, globalIndex }) => {

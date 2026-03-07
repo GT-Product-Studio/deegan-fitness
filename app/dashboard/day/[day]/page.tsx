@@ -58,6 +58,19 @@ export default async function DayPage({
 
   const isCompleted = !!progressEntry;
 
+  // Fetch synced activity logs for this day's date
+  // Map day_number to a date relative to the user's program start
+  const startedAt = profile?.started_at ? new Date(profile.started_at) : new Date();
+  const dayDate = new Date(startedAt);
+  dayDate.setDate(dayDate.getDate() + dayNumber - 1);
+  const dateStr = dayDate.toISOString().split("T")[0];
+
+  const { data: activityLogs } = await supabase
+    .from("activity_logs")
+    .select("id, activity_type, value, date, source, hr_avg, hr_max, hr_zone_minutes, notes")
+    .eq("user_id", user.id)
+    .eq("date", dateStr);
+
   const hasPrev = dayNumber > 1;
   const hasNext = dayNumber < 30;
 
@@ -123,6 +136,7 @@ export default async function DayPage({
       <ExerciseList
         exercises={exercises || []}
         trainer="deegan"
+        activityLogs={activityLogs || []}
       />
 
       {/* Bottom day navigation */}
