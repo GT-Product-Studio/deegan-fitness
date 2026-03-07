@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { exchangeGarminToken } from "@/lib/wearables/garmin";
 
 /**
- * GET /api/wearables/callback/garmin?code=...
+ * GET /api/wearables/garmin/callback?code=...
  * Handles Garmin OAuth callback
  */
 export async function GET(request: NextRequest) {
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
   const baseUrl = request.nextUrl.origin;
 
   if (!user) {
+    console.error("Garmin callback: user not authenticated");
     return NextResponse.redirect(`${baseUrl}/login`);
   }
 
@@ -29,7 +31,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const redirectUri = `${baseUrl}/api/wearables/callback/garmin`;
+    const redirectUri = `${baseUrl}/api/wearables/garmin/callback`;
+    console.log("Garmin callback: exchanging code for token...");
     const tokens = await exchangeGarminToken(code, redirectUri);
 
     // Calculate token expiry
@@ -37,8 +40,9 @@ export async function GET(request: NextRequest) {
       Date.now() + tokens.expires_in * 1000
     ).toISOString();
 
-    // Store connection
-    const { error: dbError } = await supabase
+    // Use admin client to bypass RLS
+    const admin = createAdminClient();
+    const { error: dbError } = await admin
       .from("wearable_connections")
       .upsert(
         {
@@ -61,6 +65,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    console.log("Garmin callback: connection saved for user", user.id);
     return NextResponse.redirect(
       `${baseUrl}/dashboard/account?success=garmin_connected`
     );

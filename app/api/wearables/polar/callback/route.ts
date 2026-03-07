@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { exchangePolarToken, registerPolarUser } from "@/lib/wearables/polar";
 
 /**
- * GET /api/wearables/callback/polar?code=...
+ * GET /api/wearables/polar/callback?code=...
  * Handles Polar OAuth callback
  */
 export async function GET(request: NextRequest) {
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
   const baseUrl = request.nextUrl.origin;
 
   if (!user) {
+    console.error("Polar callback: user not authenticated");
     return NextResponse.redirect(`${baseUrl}/login`);
   }
 
@@ -29,14 +31,18 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const redirectUri = `${baseUrl}/api/wearables/callback/polar`;
+    const redirectUri = `${baseUrl}/api/wearables/polar/callback`;
+    console.log("Polar callback: exchanging code for token...");
     const tokens = await exchangePolarToken(code, redirectUri);
+    console.log("Polar callback: got tokens, user_id:", tokens.x_user_id);
 
     // Register user with Polar AccessLink
     await registerPolarUser(tokens.access_token, tokens.x_user_id);
+    console.log("Polar callback: user registered with AccessLink");
 
-    // Store connection (Polar tokens don't expire — no refresh needed)
-    const { error: dbError } = await supabase
+    // Use admin client to bypass RLS for this server-side operation
+    const admin = createAdminClient();
+    const { error: dbError } = await admin
       .from("wearable_connections")
       .upsert(
         {
@@ -58,6 +64,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    console.log("Polar callback: connection saved successfully for user", user.id);
     return NextResponse.redirect(
       `${baseUrl}/dashboard/account?success=polar_connected`
     );

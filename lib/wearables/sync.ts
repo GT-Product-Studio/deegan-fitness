@@ -2,7 +2,7 @@
  * Wearable data sync — pulls from Polar/Garmin and writes to activity_logs
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import {
   getPolarExercises,
   getPolarExerciseZones,
@@ -27,7 +27,7 @@ interface SyncResult {
  * Sync a user's wearable data to activity_logs
  */
 export async function syncWearableData(userId: string): Promise<SyncResult> {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Get user's wearable connections
   const { data: connections } = await supabase
