@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
   const provider = request.nextUrl.searchParams.get("provider");
   const baseUrl = request.nextUrl.origin;
-  const redirectUri = `${baseUrl}/api/wearables/callback/${provider}`;
+  const redirectUri = `${baseUrl}/api/wearables/${provider}/callback`;
 
   try {
     let authUrl: string;
