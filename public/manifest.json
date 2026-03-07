@@ -1,12 +1,12 @@
 {
-  "name": "Your Brand Fitness",
-  "short_name": "YBF Fitness",
-  "description": "Day-by-day workouts, exercise videos, progress tracking. Powered by your favourite trainers.",
+  "name": "Danger Fitness",
+  "short_name": "Danger Fitness",
+  "description": "Haiden Deegan's real MX training regimen — road cycling, moto practice, and gym work. Race the champ.",
   "start_url": "/dashboard",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0d0d0d",
-  "theme_color": "#0d0d0d",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
   "categories": ["fitness", "health", "sports"],
   "icons": [
     {

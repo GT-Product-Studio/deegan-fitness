@@ -1,5 +1,5 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// DEEGAN FITNESS — BRAND CONFIGURATION
+// DANGER FITNESS — BRAND CONFIGURATION
 // Single-trainer subscription platform for MX riders.
 // Haiden Deegan's actual training regimen — one program, no tiers.
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -82,29 +82,29 @@ export interface StatConfig {
 export const brand = {
 
   // ─── Site Identity ───────────────────────────────────────────────────────────
-  name: "Deegan Fitness",
-  shortName: "DEEGAN",
+  name: "Danger Fitness",
+  shortName: "DANGER",
   tagline: "Train Like a Champion",
   description:
     "Haiden Deegan's real MX training regimen — road cycling, motocross practice, and gym work. Synced to your watch. Race the champ.",
   domain: "https://deegan-fitness.vercel.app",
-  supportEmail: "support@deeganfitness.com",
-  fromEmail: "Deegan Fitness <noreply@deeganfitness.com>",
-  packageName: "deegan-fitness",
+  supportEmail: "support@dangerfitness.com",
+  fromEmail: "Danger Fitness <noreply@dangerfitness.com>",
+  packageName: "danger-fitness",
 
   // ─── Navigation / Logo ───────────────────────────────────────────────────────
   nav: {
-    logoPrefix: "DEEGAN",
+    logoPrefix: "DANGER",
     logoAccent: "FITNESS",
-    adminLogoPrefix: "DEEGAN",
+    adminLogoPrefix: "DANGER",
     adminLogoAccent: "ADMIN",
-    dashboardLogoPrefix: "DEEGAN",
+    dashboardLogoPrefix: "DANGER",
     dashboardLogoAccent: "Fitness",
   },
 
   // ─── Hero Section ────────────────────────────────────────────────────────────
   hero: {
-    headline: "TRAIN LIKE DEEGAN",
+    headline: "TRAIN LIKE DANGER",
     subheadline: "The exact regiment that built a two-time champion.",
     ctaLabel: "Start Training — $19.99/mo",
     ctaSecondaryLabel: "See the Program",
@@ -287,7 +287,7 @@ export const brand = {
 
   // ─── Subscription ────────────────────────────────────────────────────────────
   subscription: {
-    displayName: "Train Like Deegan",
+    displayName: "The Danger Challenge",
     price: 19.99,
     priceFormatted: "$19.99",
     priceDollars: "$19",
@@ -374,7 +374,7 @@ export const brand = {
 
   // ─── Legal ───────────────────────────────────────────────────────────────────
   legal: {
-    entityName: "Deegan Fitness",
+    entityName: "Danger Fitness",
   },
 } as const;
 
