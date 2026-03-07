@@ -31,8 +31,9 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // Use the registered redirect URI — must match admin portal exactly
     const redirectUri = `${baseUrl}/api/wearables/polar/callback`;
-    console.log("Polar callback: exchanging code for token...");
+    console.log("Polar callback: exchanging code for token, redirectUri:", redirectUri);
     const tokens = await exchangePolarToken(code, redirectUri);
     console.log("Polar callback: got tokens, user_id:", tokens.x_user_id);
 
@@ -69,9 +70,10 @@ export async function GET(request: NextRequest) {
       `${baseUrl}/dashboard/account?success=polar_connected`
     );
   } catch (err) {
-    console.error("Polar callback error:", err);
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    console.error("Polar callback error:", errorMsg);
     return NextResponse.redirect(
-      `${baseUrl}/dashboard/account?error=polar_connect_failed`
+      `${baseUrl}/dashboard/account?error=polar_connect_failed&detail=${encodeURIComponent(errorMsg)}`
     );
   }
 }
