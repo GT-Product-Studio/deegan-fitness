@@ -120,7 +120,7 @@ export const brand = {
   // ─── Proof Bar (Stats) ──────────────────────────────────────────────────────
   stats: [
     { value: "2×", label: "SMX Champion" },
-    { value: "1.5M", label: "Instagram" },
+    { value: "2M", label: "Instagram" },
     { value: "210", label: "Avg Peak BPM" },
     { value: "200+", label: "Miles/Week" },
   ] satisfies StatConfig[],
