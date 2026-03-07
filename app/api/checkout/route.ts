@@ -48,8 +48,8 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${req.headers.get('origin')}/dashboard?checkout=success`,
-      cancel_url: `${req.headers.get('origin')}/?checkout=cancelled`,
+      success_url: `${req.headers.get('origin')}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.get('origin')}/checkout?cancelled=true`,
       subscription_data: {
         metadata: {
           supabase_user_id: user.id,

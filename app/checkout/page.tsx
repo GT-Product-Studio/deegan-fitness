@@ -21,8 +21,16 @@ export default function CheckoutPage() {
         body: JSON.stringify({ planType: "subscription" }),
       });
       const data = await res.json();
-      if (data.url) router.push(data.url);
-      else setLoading(false);
+      if (res.status === 401) {
+        // Not logged in — send to signup with redirect back to checkout
+        router.push("/signup?redirect=/checkout");
+        return;
+      }
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setLoading(false);
+      }
     } catch {
       setLoading(false);
     }
