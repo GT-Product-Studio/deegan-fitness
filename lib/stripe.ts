@@ -1,13 +1,13 @@
-import Stripe from 'stripe'
+import Stripe from 'stripe';
 
-let _stripe: Stripe | null = null
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2026-02-25.clover',
+  typescript: true,
+});
 
-export function getStripe(): Stripe {
-  if (!_stripe) {
-    _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-      apiVersion: '2026-01-28.clover',
-      typescript: true,
-    })
-  }
-  return _stripe
+export const PRICE_ID = process.env.STRIPE_PRICE_ID!;
+
+// Client-side Stripe loader (for checkout redirects if needed)
+export function getStripe() {
+  return stripe;
 }

@@ -1,66 +1,69 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getStripe } from "@/lib/stripe";
-import { subscriptionPlan } from "@/lib/stripe-products";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { NextResponse } from 'next/server';
+import { stripe, PRICE_ID } from '@/lib/stripe';
+import { createClient } from '@/lib/supabase/server';
 
-async function getCurrentUser() {
+export async function POST(req: Request) {
   try {
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() { return cookieStore.getAll(); },
-          setAll() {},
-        },
-      }
-    );
+    const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
-    return user ?? null;
-  } catch {
-    return null;
-  }
-}
 
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json() as { planType?: string };
-    const user = await getCurrentUser();
-    const userId = user?.id ?? null;
-    const userEmail = user?.email ?? null;
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL!;
+    if (!user) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    }
 
-    const session = await getStripe().checkout.sessions.create({
-      mode: "subscription",
+    // Check if user already has a Stripe customer ID
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('stripe_customer_id, email')
+      .eq('id', user.id)
+      .single();
+
+    let customerId = profile?.stripe_customer_id;
+
+    // Create Stripe customer if needed
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: user.email || profile?.email,
+        metadata: {
+          supabase_user_id: user.id,
+        },
+      });
+      customerId = customer.id;
+
+      // Save customer ID to profile
+      await supabase
+        .from('profiles')
+        .update({ stripe_customer_id: customerId })
+        .eq('id', user.id);
+    }
+
+    // Create checkout session
+    const session = await stripe.checkout.sessions.create({
+      customer: customerId,
+      mode: 'subscription',
+      payment_method_types: ['card'],
       line_items: [
         {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: subscriptionPlan.name,
-              description: subscriptionPlan.description,
-            },
-            unit_amount: Math.round(subscriptionPlan.price * 100),
-            recurring: { interval: "month" },
-          },
+          price: PRICE_ID,
           quantity: 1,
         },
       ],
-      ...(userEmail ? { customer_email: userEmail } : {}),
-      metadata: {
-        planType: "subscription",
-        ...(userId ? { userId } : {}),
+      success_url: `${req.headers.get('origin')}/dashboard?checkout=success`,
+      cancel_url: `${req.headers.get('origin')}/?checkout=cancelled`,
+      subscription_data: {
+        metadata: {
+          supabase_user_id: user.id,
+        },
       },
-      ...(userId ? { client_reference_id: userId } : {}),
-      success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${appUrl}/checkout`,
+      allow_promotion_codes: true,
     });
 
     return NextResponse.json({ url: session.url });
-  } catch (err) {
-    console.error("Checkout error:", err);
-    return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 });
+  } catch (error: any) {
+    console.error('Checkout error:', error);
+    return NextResponse.json(
+      { error: error.message || 'Failed to create checkout session' },
+      { status: 500 }
+    );
   }
 }
