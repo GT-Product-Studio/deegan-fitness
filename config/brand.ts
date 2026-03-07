@@ -129,7 +129,7 @@ export const brand = {
   trainer: {
     name: "Haiden Deegan",
     firstName: "Haiden",
-    age: 19,
+    age: 20,
     hometown: "Temecula, CA",
     specialty: "Motocross & Supercross",
     handle: "@haidendeegan",
@@ -137,7 +137,7 @@ export const brand = {
     bioPhoto: "/images/deegan/deegan-1.jpg",
     heroPhoto: "/images/deegan/deegan-hero-poster.jpg",
     stadiumPhoto: "/images/deegan/deegan-sx-1.jpg",
-    bio: "Two-time 250cc SuperMotocross Champion. Two-time AMA Motocross 250cc Champion. 2025 AMA Supercross 250cc West Champion. At 19, Haiden Deegan is the most dominant young rider in motocross — and his edge isn't just talent. It's the regiment. 50 miles on the road bike. 2 hours on the track. An hour and a half in the gym. Every single day. Now you can train the same way.",
+    bio: "Two-time 250cc SuperMotocross Champion. Two-time AMA Motocross 250cc Champion. 2025 AMA Supercross 250cc West Champion. At 20, Haiden Deegan is the most dominant young rider in motocross — and his edge isn't just talent. It's the regiment. 50 miles on the road bike. 2 hours on the track. An hour and a half in the gym. Every single day. Now you can train the same way.",
     titles: [
       "2× 250cc SMX Champion",
       "2× AMA Motocross 250cc Champion",

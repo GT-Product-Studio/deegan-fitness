@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   try {
     const { provider } = await request.json();
 
-    if (!["polar", "garmin", "strava"].includes(provider)) {
+    if (!["polar", "garmin"].includes(provider)) {
       return NextResponse.json(
         { error: "Invalid provider" },
         { status: 400 }
