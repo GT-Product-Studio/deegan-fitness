@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Play } from "lucide-react";
 import { ExerciseModal } from "./exercise-modal";
 import { brand } from "@/config/brand";
 
@@ -11,8 +10,6 @@ interface Exercise {
   sets: number | null;
   reps: string | null;
   duration: string | null;
-  video_url: string | null;
-  thumbnail_url: string | null;
   notes: string | null;
   order_index: number;
   block: string | null;
@@ -76,66 +73,47 @@ export function ExerciseList({ exercises, trainer }: ExerciseListProps) {
                     <button
                       key={exercise.id}
                       onClick={() => setOpenIndex(globalIndex)}
-                      className="w-full text-left bg-card border border-card-border rounded-2xl overflow-hidden hover:border-primary/40 transition group"
+                      className="w-full text-left bg-card border border-card-border rounded-2xl overflow-hidden hover:border-primary/40 transition group p-4"
                     >
-                      {/* Thumbnail / video preview area */}
-                      <div className="relative bg-gradient-to-br from-card-border/50 to-card h-32 flex flex-col items-center justify-center gap-2 overflow-hidden">
-                        {exercise.thumbnail_url ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={exercise.thumbnail_url}
-                            alt={exercise.name}
-                            className="absolute inset-0 w-full h-full object-cover opacity-60"
-                          />
-                        ) : null}
-                        <div className="relative z-10 w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:bg-primary/20 group-hover:border-primary/40 transition">
-                          <Play className="w-5 h-5 text-white ml-0.5" />
-                        </div>
-                        {!exercise.video_url && (
-                          <p className="relative z-10 text-xs text-white/50">
-                            Video coming soon
-                          </p>
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className={`text-xs font-medium ${config.accent}`}>
+                          {config.emoji} {config.label}
+                        </p>
+                        {hrZone && (
+                          <span
+                            className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                            style={{ backgroundColor: `${hrZone.color}20`, color: hrZone.color }}
+                          >
+                            Zone {hrZone.zone}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="font-bold text-lg leading-tight">{exercise.name}</h3>
+
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {exercise.sets && (
+                          <span className="bg-background rounded-lg px-3 py-1 text-sm">
+                            <span className="text-muted">Sets </span>
+                            <span className="font-bold">{exercise.sets}</span>
+                          </span>
+                        )}
+                        {exercise.reps && (
+                          <span className="bg-background rounded-lg px-3 py-1 text-sm">
+                            <span className="text-muted">Reps </span>
+                            <span className="font-bold">{exercise.reps}</span>
+                          </span>
+                        )}
+                        {exercise.duration && (
+                          <span className="bg-background rounded-lg px-3 py-1 text-sm">
+                            <span className="text-muted">Time </span>
+                            <span className="font-bold">{exercise.duration}</span>
+                          </span>
                         )}
                       </div>
 
-                      {/* Exercise info */}
-                      <div className="p-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <p className={`text-xs font-medium ${config.accent}`}>
-                            {config.emoji} {config.label}
-                          </p>
-                          {hrZone && (
-                            <span
-                              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                              style={{ backgroundColor: `${hrZone.color}20`, color: hrZone.color }}
-                            >
-                              Zone {hrZone.zone}
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="font-bold text-lg leading-tight">{exercise.name}</h3>
-
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {exercise.sets && (
-                            <span className="bg-background rounded-lg px-3 py-1 text-sm">
-                              <span className="text-muted">Sets </span>
-                              <span className="font-bold">{exercise.sets}</span>
-                            </span>
-                          )}
-                          {exercise.reps && (
-                            <span className="bg-background rounded-lg px-3 py-1 text-sm">
-                              <span className="text-muted">Reps </span>
-                              <span className="font-bold">{exercise.reps}</span>
-                            </span>
-                          )}
-                          {exercise.duration && (
-                            <span className="bg-background rounded-lg px-3 py-1 text-sm">
-                              <span className="text-muted">Time </span>
-                              <span className="font-bold">{exercise.duration}</span>
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                      {exercise.notes && (
+                        <p className="text-xs text-muted mt-2 line-clamp-1">{exercise.notes}</p>
+                      )}
                     </button>
                   );
                 })}
