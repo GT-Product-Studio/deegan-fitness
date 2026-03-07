@@ -104,7 +104,7 @@ export const brand = {
 
   // ─── Hero Section ────────────────────────────────────────────────────────────
   hero: {
-    headline: "TRAIN LIKE DANGER",
+    headline: "TRAIN WITH HAIDEN",
     subheadline: "The exact regiment that built a two-time champion.",
     ctaLabel: "Start Training — $19.99/mo",
     ctaSecondaryLabel: "See the Program",
