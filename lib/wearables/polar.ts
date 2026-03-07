@@ -62,16 +62,17 @@ export interface PolarContinuousHR {
 
 /**
  * Build the Polar OAuth2 authorization URL
+ * Note: Polar's authorization endpoint only needs response_type + client_id.
+ * The redirect_uri and scopes are configured in the admin portal at
+ * https://admin.polaraccesslink.com — passing them here can cause errors.
  */
-export function getPolarAuthUrl(redirectUri: string): string {
+export function getPolarAuthUrl(_redirectUri: string): string {
   const clientId = process.env.POLAR_CLIENT_ID;
   if (!clientId) throw new Error("POLAR_CLIENT_ID not set");
 
   const params = new URLSearchParams({
     response_type: "code",
     client_id: clientId,
-    redirect_uri: redirectUri,
-    scope: "accesslink.read_all",
   });
 
   return `${POLAR_AUTH_URL}?${params.toString()}`;
