@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
-import { ChevronDown, Heart, Bike, Dumbbell, Timer, ArrowRight, Instagram, ExternalLink } from "lucide-react";
+import { ChevronDown, Heart, ArrowRight, Instagram, ExternalLink } from "lucide-react";
 import { brand } from "@/config/brand";
 
 const fadeUp = {
@@ -17,8 +17,6 @@ const stagger = {
 };
 
 export default function Home() {
-  const regiment = brand.regiment;
-
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
@@ -32,8 +30,7 @@ export default function Home() {
           </Link>
           <div className="hidden md:flex items-center gap-8">
             {[
-              { label: "Regiment", href: "#regiment" },
-              { label: "Training", href: "#pillars" },
+              { label: "Features", href: "#regiment" },
               { label: "About", href: "#about" },
             ].map(({ label, href }) => (
               <Link key={label} href={href} className="text-xs font-semibold tracking-widest uppercase text-white/50 hover:text-white transition">
@@ -146,161 +143,80 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── THE REGIMENT ── */}
+      {/* ── WHAT YOU GET ── */}
       <section id="regiment" className="py-16 md:py-24 scroll-mt-16 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-5 md:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.p variants={fadeUp} className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-3">
-              Weekly Structure
+              What You Get
             </motion.p>
             <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-6xl font-bold uppercase leading-none mb-4">
-              The Regiment
+              Not A PDF. A Platform.
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-muted text-sm md:text-base max-w-lg mb-10 leading-relaxed">
-              Mon-Wed: full send. Thu-Fri: travel or train. Saturday: race day. Sunday: recover.
-              Every week follows this structure. Haiden&rsquo;s actual numbers.
+            <motion.p variants={fadeUp} className="text-muted text-sm md:text-base max-w-lg mb-12 leading-relaxed">
+              This isn&rsquo;t a generic workout plan. It&rsquo;s Haiden&rsquo;s actual daily training — structured, tracked, and competitive.
             </motion.p>
-          </motion.div>
-
-          {/* Regiment stats */}
-          <div className="flex gap-6 mb-8">
-            <div className="text-center">
-              <p className="font-display text-3xl font-bold text-primary">{regiment.cyclingMiles}</p>
-              <p className="text-xs text-muted uppercase tracking-wider">Miles/Day</p>
-            </div>
-            <div className="text-center">
-              <p className="font-display text-3xl font-bold text-primary">{regiment.motoHours}</p>
-              <p className="text-xs text-muted uppercase tracking-wider">Hrs Moto</p>
-            </div>
-            <div className="text-center">
-              <p className="font-display text-3xl font-bold text-primary">{regiment.gymHours}</p>
-              <p className="text-xs text-muted uppercase tracking-wider">Hrs Gym</p>
-            </div>
-          </div>
-
-          <p className="text-muted text-sm mb-6 max-w-md">{regiment.description}</p>
-
-          {/* Weekly grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-2">
-            {brand.weekSchedule.map((day) => {
-              const isTraining = day.type === "training";
-              const isRace = day.type === "race";
-              const isRecovery = day.type === "recovery";
-
-              return (
-                <motion.div
-                  key={day.day}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className={`p-4 border transition-all ${
-                    isRace
-                      ? "border-zone-redline/40 bg-zone-redline/5"
-                      : isTraining
-                      ? "border-primary/30 bg-primary/5"
-                      : isRecovery
-                      ? "border-white/5 bg-card"
-                      : "border-white/5 bg-card/50"
-                  }`}
-                >
-                  <p className="text-xs text-muted-dark font-semibold tracking-wider uppercase mb-1">
-                    {day.day.slice(0, 3)}
-                  </p>
-                  <p className={`font-display text-sm font-bold uppercase leading-tight mb-2 ${
-                    isRace ? "text-zone-redline" : isTraining ? "text-primary" : "text-muted"
-                  }`}>
-                    {day.label}
-                  </p>
-                  {isTraining && (
-                    <div className="space-y-1 text-[11px] text-muted">
-                      <p>{regiment.cyclingMiles}mi ride</p>
-                      <p>{regiment.motoHours}hr moto</p>
-                      <p>{regiment.gymHours}hr gym</p>
-                    </div>
-                  )}
-                  {!isTraining && (
-                    <p className="text-[11px] text-muted-dark leading-snug">{day.description}</p>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── THREE PILLARS ── */}
-      <section id="pillars" className="py-16 md:py-24 scroll-mt-16 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-5 md:px-8">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-            <motion.p variants={fadeUp} className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-3">
-              Training Pillars
-            </motion.p>
-            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-6xl font-bold uppercase leading-none mb-12">
-              Three Pillars. Every Day.
-            </motion.h2>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-4">
             {[
               {
-                icon: Bike,
-                title: "Road Cycling",
-                stat: `${brand.benchmarks.dailyCyclingMiles} miles`,
-                desc: "50 miles before most people wake up. Zone 2-3 endurance base that builds the aerobic engine a moto racer needs.",
-                zones: "HR Zone 2-3",
-                image: "/images/deegan/deegan-sx-7.jpg",
+                emoji: "🏆",
+                title: "Danger Challenge",
+                desc: "Monthly 30-day competition. Race against Haiden's benchmarks and every other subscriber. New month, clean leaderboard.",
+                accent: "border-primary/30 bg-primary/5",
               },
               {
-                icon: Timer,
-                title: "Moto Practice",
-                stat: `${brand.benchmarks.dailyMotoHours} hours`,
-                desc: "2 hours on the track, every day. Sport-specific training at race pace. This is where the heart rate spikes.",
-                zones: "HR Zone 3-5",
-                image: "/images/deegan/deegan-sx-3.jpg",
+                emoji: "⌚",
+                title: "Watch Sync",
+                desc: "Connect your Garmin or Polar. Your rides, sessions, and gym time auto-sync — no manual logging needed.",
+                accent: "border-zone-tempo/30 bg-zone-tempo/5",
               },
               {
-                icon: Dumbbell,
-                title: "Gym",
-                stat: `${brand.benchmarks.dailyGymHours} hours`,
-                desc: "1.5 hours of strength and conditioning. Upper body, core, legs. The physical armor for 30+ minute motos.",
-                zones: "HR Zone 2-4",
-                image: "/images/deegan/deegan-sx-12.jpg",
+                emoji: "📊",
+                title: "Leaderboard",
+                desc: "See where you rank against everyone else. Your score updates in real time as you train. Bragging rights are earned.",
+                accent: "border-zone-threshold/30 bg-zone-threshold/5",
               },
-            ].map(({ icon: Icon, title, stat, desc, zones, image }) => (
+            ].map(({ emoji, title, desc, accent }) => (
               <motion.div
                 key={title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="group border border-white/10 bg-card overflow-hidden hover:border-primary/30 transition-colors"
+                className={`border ${accent} p-6 md:p-8 hover:border-primary/40 transition-colors`}
               >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={image}
-                    alt={title}
-                    fill
-                    quality={100}
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-                    <div className="flex items-center gap-2">
-                      <Icon className="w-5 h-5 text-primary" />
-                      <span className="font-display text-xl font-bold uppercase text-white">{title}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-5">
-                  <div className="flex items-baseline justify-between mb-3">
-                    <span className="font-display text-3xl font-bold text-primary">{stat}</span>
-                    <span className="text-xs text-muted tracking-widest uppercase">{zones}</span>
-                  </div>
-                  <p className="text-sm text-muted leading-relaxed">{desc}</p>
-                </div>
+                <span className="text-4xl">{emoji}</span>
+                <h3 className="font-display text-xl font-bold uppercase text-white mt-4 mb-3">{title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{desc}</p>
               </motion.div>
             ))}
           </div>
+
+          {/* What's included list */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-8 border border-white/10 bg-card p-6 md:p-8"
+          >
+            <p className="font-display text-sm font-bold uppercase tracking-widest text-muted mb-4">Also Included</p>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                "30 days of structured programming",
+                "Cycling, moto, and gym sessions",
+                "Heart rate zone training guides",
+                "Race-week schedule adjustments",
+                "Progress tracking & completion streaks",
+                "Cancel anytime — no contracts",
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                  <span className="text-sm text-white/80">{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
