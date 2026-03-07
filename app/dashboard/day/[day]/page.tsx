@@ -137,6 +137,8 @@ export default async function DayPage({
         exercises={exercises || []}
         trainer="deegan"
         activityLogs={activityLogs || []}
+        workoutId={workout.id}
+        dayNumber={dayNumber}
       />
 
       {/* Bottom day navigation */}
