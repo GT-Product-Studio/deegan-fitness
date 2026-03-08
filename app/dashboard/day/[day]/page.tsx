@@ -23,7 +23,7 @@ export default async function DayPage({
     .eq("id", user.id)
     .single();
 
-  const trainingLevel = (profile?.training_level as "grom" | "amateur" | "pro") || "grom";
+  const trainingLevel = (profile?.training_level as "grom" | "factory") || "grom";
 
   // Fetch workout for this day + training level
   const { data: workout } = await supabase
