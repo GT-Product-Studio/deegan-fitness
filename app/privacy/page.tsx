@@ -1,70 +1,97 @@
 import Link from "next/link";
 import { brand } from "@/config/brand";
 
+export const metadata = {
+  title: "Privacy Policy — Danger Fitness",
+};
+
 export default function PrivacyPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10" style={{ paddingTop: "env(safe-area-inset-top)" }}>
-        <div className="max-w-7xl mx-auto px-5 h-14 flex items-center">
-          <Link href="/" className="font-display text-xl font-bold tracking-wider uppercase text-white">
-            {brand.nav.logoPrefix} <span className="text-primary">{brand.nav.logoAccent}</span>
-          </Link>
-        </div>
-      </nav>
+      <header className="border-b border-white/10 bg-card px-6 h-14 flex items-center">
+        <Link href="/" className="font-display text-xl font-bold tracking-wider uppercase">
+          {brand.nav.logoPrefix} <span className="text-primary">{brand.nav.logoAccent}</span>
+        </Link>
+      </header>
 
-      <div className="max-w-2xl mx-auto px-6 py-16 space-y-8">
-        <div>
-          <p className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-3">Legal</p>
-          <h1 className="font-display text-4xl font-bold uppercase leading-none mb-2">Privacy Policy</h1>
-          <p className="text-muted text-sm">Last updated: March 2026</p>
-        </div>
+      <div className="max-w-2xl mx-auto px-6 py-12">
+        <h1 className="font-display text-4xl font-bold uppercase mb-2">Privacy Policy</h1>
+        <p className="text-muted text-sm mb-8">Last updated: March 7, 2026</p>
 
-        {[
-          {
-            title: "1. Information We Collect",
-            body: "We collect your email address and name when you create an account or subscribe. If you connect a Garmin or Polar device, we receive activity data (heart rate, activities, summaries). Payment processing is handled entirely by Stripe — we never store your card details.",
-          },
-          {
-            title: "2. How We Use Your Information",
-            body: "Your information is used to provide access to your subscription, generate benchmark comparisons, send account-related emails, and improve the platform. We do not sell your data.",
-          },
-          {
-            title: "3. Wearable Data",
-            body: "If you connect a Garmin or Polar device, we receive activity summaries and heart rate data to power the benchmark comparison feature. This data is stored securely and is never shared with third parties.",
-          },
-          {
-            title: "4. Cookies & Analytics",
-            body: "We may use basic analytics to understand site usage. No personally identifiable data is shared with third-party advertisers.",
-          },
-          {
-            title: "5. Data Storage",
-            body: "Your account data is stored securely via Supabase (PostgreSQL). Payment data is stored by Stripe under their PCI-compliant infrastructure. We retain your data for as long as your account is active.",
-          },
-          {
-            title: "6. Your Rights",
-            body: `You may request access to, correction of, or deletion of your personal data at any time. To do so, email ${brand.supportEmail}.`,
-          },
-          {
-            title: "7. Security",
-            body: "We take reasonable measures to protect your data, including HTTPS encryption on all transmissions and secure authentication via Supabase Auth.",
-          },
-          {
-            title: "8. Children",
-            body: "Our services are not directed at children under 13. We do not knowingly collect data from minors.",
-          },
-          {
-            title: "9. Contact",
-            body: `Questions about this policy? Email us at ${brand.supportEmail}.`,
-          },
-        ].map(({ title, body }) => (
-          <div key={title} className="border-t border-white/10 pt-6">
-            <h2 className="font-bold text-sm mb-3 text-white">{title}</h2>
-            <p className="text-muted text-sm leading-relaxed">{body}</p>
-          </div>
-        ))}
+        <div className="prose prose-invert prose-sm max-w-none space-y-6 text-white/80">
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">1. Information We Collect</h2>
+            <p><strong className="text-white">Account Information:</strong> When you create an account, we collect your name, email address, and password.</p>
+            <p><strong className="text-white">Health &amp; Fitness Data:</strong> With your permission, we collect heart rate data from connected Bluetooth devices (Polar, Garmin, Wahoo, etc.), workout completion data, exercise timestamps, and activity logs. If you connect Apple Health or Google Health Connect, we access heart rate, workout, and activity data as described in the permission prompts.</p>
+            <p><strong className="text-white">Payment Information:</strong> Payment is processed securely by Stripe. We do not store your credit card number. We receive your Stripe customer ID and subscription status.</p>
+            <p><strong className="text-white">Usage Data:</strong> We collect basic usage analytics including pages visited, features used, and app session data.</p>
+          </section>
 
-        <div className="border-t border-white/10 pt-6">
-          <Link href="/terms" className="text-primary text-sm hover:underline">View Terms of Service &rarr;</Link>
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">2. How We Use Your Information</h2>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Provide and personalize the Danger Fitness training experience</li>
+              <li>Track your workout progress and display performance metrics</li>
+              <li>Calculate heart rate zones and training scores</li>
+              <li>Power the monthly Danger Challenge leaderboard</li>
+              <li>Process subscription payments</li>
+              <li>Send account-related notifications</li>
+              <li>Improve the app and fix bugs</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">3. Leaderboard &amp; Public Data</h2>
+            <p>If you participate in the Danger Challenge, your display name and score may appear on the leaderboard visible to other subscribers. You can opt out of the leaderboard in Settings.</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">4. Data Sharing</h2>
+            <p>We do <strong className="text-white">not</strong> sell your personal information. We share data only with:</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong className="text-white">Stripe</strong> — for payment processing</li>
+              <li><strong className="text-white">Supabase</strong> — for secure data storage (hosted in the US)</li>
+              <li><strong className="text-white">Vercel</strong> — for web hosting</li>
+            </ul>
+            <p>We do not share your health or fitness data with any third parties.</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">5. Bluetooth &amp; Health Data</h2>
+            <p>Heart rate data collected via Bluetooth is stored on your device during workouts and synced to our servers only after you complete a workout. You can disconnect your heart rate monitor at any time in Settings. If you revoke Bluetooth or HealthKit permissions, we will no longer collect that data.</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">6. Data Retention</h2>
+            <p>We retain your account and workout data for as long as your account is active. If you cancel your subscription, your data is retained for 90 days in case you resubscribe. After 90 days, workout and health data is permanently deleted. You can request immediate deletion by contacting us.</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">7. Your Rights</h2>
+            <p>You can:</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Access your personal data at any time in the app</li>
+              <li>Export your workout data</li>
+              <li>Delete your account and all associated data</li>
+              <li>Opt out of the leaderboard</li>
+              <li>Revoke health data permissions</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">8. Children&apos;s Privacy</h2>
+            <p>Danger Fitness is not intended for children under 13. We do not knowingly collect information from children under 13.</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">9. Changes</h2>
+            <p>We may update this privacy policy from time to time. We will notify you of significant changes via email or in-app notification.</p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mt-8 mb-3">10. Contact</h2>
+            <p>Questions about this privacy policy? Contact us at <a href="mailto:support@dangerfitness.com" className="text-primary hover:underline">support@dangerfitness.com</a>.</p>
+          </section>
         </div>
       </div>
     </main>
