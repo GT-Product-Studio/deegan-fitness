@@ -3,6 +3,13 @@ import { redirect } from "next/navigation";
 import { Bike, Timer, Dumbbell, Trophy, ChevronRight, ArrowRight } from "lucide-react";
 import { brand } from "@/config/brand";
 import Link from "next/link";
+import { TierBadge } from "@/app/components/tier-selector";
+
+const TIER_STATS: Record<string, { cycling: string; moto: string; gym: string }> = {
+  grom: { cycling: "30min", moto: "45min", gym: "30min" },
+  amateur: { cycling: "1hr", moto: "1.5hr", gym: "45min" },
+  pro: { cycling: "50mi", moto: "2hr", gym: "1.5hr" },
+};
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -16,7 +23,8 @@ export default async function DashboardPage() {
     .single();
 
   const firstName = profile?.full_name?.split(" ")[0] ?? null;
-  const trainingLevel = (profile?.training_level as "grom" | "factory") || "grom";
+  const trainingLevel = (profile?.training_level as string) || "grom";
+  const tierStats = TIER_STATS[trainingLevel] || TIER_STATS.grom;
   const regiment = brand.regiment;
 
   // Challenge widget data
@@ -83,8 +91,8 @@ export default async function DashboardPage() {
             <span className="text-lg">🏁</span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-muted font-medium">
-              {firstName ? `Hey, ${firstName}` : "Hey"} &mdash; The Regiment
+            <p className="text-xs text-muted font-medium flex items-center gap-2">
+              {firstName ? `Hey, ${firstName}` : "Hey"} &mdash; <TierBadge tier={trainingLevel} />
             </p>
             <p className="text-sm text-muted mt-1 italic leading-relaxed line-clamp-2">
               &ldquo;{quote}&rdquo;
@@ -158,17 +166,17 @@ export default async function DashboardPage() {
             <div className="grid grid-cols-3 gap-3 mt-4">
               <div className="bg-card-elevated border border-white/5 rounded-xl p-3 text-center">
                 <Bike className="w-5 h-5 text-primary mx-auto mb-1" />
-                <p className="font-display text-xl font-bold text-white">{regiment.cyclingMiles}mi</p>
+                <p className="font-display text-xl font-bold text-white">{tierStats.cycling}</p>
                 <p className="text-[10px] text-muted tracking-wider uppercase">Road Ride</p>
               </div>
               <div className="bg-card-elevated border border-white/5 rounded-xl p-3 text-center">
                 <Timer className="w-5 h-5 text-zone-threshold mx-auto mb-1" />
-                <p className="font-display text-xl font-bold text-white">{regiment.motoHours}hr</p>
+                <p className="font-display text-xl font-bold text-white">{tierStats.moto}</p>
                 <p className="text-[10px] text-muted tracking-wider uppercase">Moto</p>
               </div>
               <div className="bg-card-elevated border border-white/5 rounded-xl p-3 text-center">
                 <Dumbbell className="w-5 h-5 text-zone-tempo mx-auto mb-1" />
-                <p className="font-display text-xl font-bold text-white">{regiment.gymHours}hr</p>
+                <p className="font-display text-xl font-bold text-white">{tierStats.gym}</p>
                 <p className="text-[10px] text-muted tracking-wider uppercase">Gym</p>
               </div>
             </div>

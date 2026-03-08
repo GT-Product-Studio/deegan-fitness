@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 import { CreditCard, LogOut, User, Zap } from "lucide-react";
 import { brand } from "@/config/brand";
 import { WearableConnections } from "@/app/components/wearable-connections";
+import { TierSelector } from "@/app/components/tier-selector";
 
 type Profile = {
   full_name: string | null;
   email: string | null;
   stripe_customer_id: string | null;
+  training_level: string | null;
 };
 
 type Subscription = {
@@ -45,7 +47,7 @@ export default function AccountPage() {
       if (!user) { router.push("/login"); return; }
 
       const [{ data: prof }, { data: sub }, { data: wearables }] = await Promise.all([
-        supabase.from("profiles").select("full_name, email, stripe_customer_id").eq("id", user.id).single(),
+        supabase.from("profiles").select("full_name, email, stripe_customer_id, training_level").eq("id", user.id).single(),
         supabase.from("subscriptions").select("plan_type, status, current_period_end").eq("user_id", user.id).eq("status", "active").maybeSingle(),
         supabase.from("wearable_connections").select("id, provider, connected_at, last_sync_at, sync_status").eq("user_id", user.id),
       ]);
@@ -183,6 +185,13 @@ export default function AccountPage() {
             <span className="font-semibold text-white">{profile?.email}</span>
           </div>
         </div>
+      </div>
+
+      {/* Training Level */}
+      <div className="bg-card border border-white/10 rounded-2xl p-5">
+        <h2 className="font-display text-sm font-bold uppercase tracking-wider text-muted mb-3">Training Level</h2>
+        <p className="text-xs text-muted mb-3">Choose your tier. Your workouts, distances, and intensity scale to match.</p>
+        <TierSelector currentTier={profile?.training_level || "grom"} />
       </div>
 
       {/* Wearable Connections */}

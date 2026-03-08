@@ -23,10 +23,20 @@ export default async function ProgramPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  // Fetch all workouts
+  // Fetch user profile for training level
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("training_level")
+    .eq("id", user.id)
+    .single();
+
+  const trainingLevel = (profile?.training_level as "grom" | "amateur" | "pro") || "grom";
+
+  // Fetch workouts for user's tier
   const { data: workouts } = await supabase
     .from("workouts")
     .select("id, day_number, title, day_type")
+    .eq("level", trainingLevel)
     .order("day_number");
 
   // Fetch user's completed workouts

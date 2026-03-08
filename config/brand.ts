@@ -1,7 +1,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // DANGER FITNESS — BRAND CONFIGURATION
 // Single-trainer subscription platform for MX riders.
-// Haiden Deegan's actual training regimen — one program, no tiers.
+// 3 tiers: Grom (beginner), Amateur (intermediate), Pro Regiment (Haiden's actual level).
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 // ── Types ────────────────────────────────────────────────────────────────────

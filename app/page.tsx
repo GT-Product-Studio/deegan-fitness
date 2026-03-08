@@ -220,6 +220,83 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── 3 TIERS ── */}
+      <section className="py-16 md:py-24 border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-5 md:px-8">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+            <motion.p variants={fadeUp} className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-3">
+              Your Level
+            </motion.p>
+            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-6xl font-bold uppercase leading-none mb-4">
+              Start Where You Are
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-muted text-sm md:text-base max-w-lg mb-12 leading-relaxed">
+              Whether you&rsquo;re a weekend warrior or chasing a factory ride, there&rsquo;s a regiment built for you.
+            </motion.p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              {
+                emoji: "🟢",
+                tier: "GROM",
+                who: "Beginners & Weekend Warriors",
+                schedule: "Rides 1×/week, trains 3-4×/week",
+                stats: ["30 min cycling", "45 min moto", "30 min gym"],
+                desc: "For kids just getting into MX, weekend riders, and anyone new to structured training. Build a foundation that makes you faster.",
+              },
+              {
+                emoji: "🟡",
+                tier: "AMATEUR",
+                who: "Local Racers & Serious Riders",
+                schedule: "Rides 2-3×/week, trains 5-6×/week",
+                stats: ["1 hr cycling", "1.5 hr moto", "45 min gym"],
+                desc: "For regional racers and dedicated riders. Real moto drills, structured intervals, and race simulation motos.",
+              },
+              {
+                emoji: "🔴",
+                tier: "PRO REGIMENT",
+                who: "Haiden's Actual Level",
+                schedule: "Full-time training, 6×/week",
+                stats: ["50 mi cycling", "2 hr moto", "1.5 hr gym"],
+                desc: "This is what Haiden does every day. The benchmark. The aspirational tier. Chase it.",
+              },
+            ].map(({ emoji, tier, who, schedule, stats, desc }) => (
+              <motion.div
+                key={tier}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="border border-white/10 bg-card p-6 md:p-8 hover:border-primary/30 transition-colors"
+              >
+                <span className="text-4xl">{emoji}</span>
+                <h3 className="font-display text-xl font-bold uppercase text-white mt-4 mb-1">{tier}</h3>
+                <p className="text-xs text-primary font-bold tracking-wider uppercase mb-3">{who}</p>
+                <p className="text-sm text-muted leading-relaxed mb-4">{desc}</p>
+                <p className="text-xs text-muted mb-2">{schedule}</p>
+                <div className="space-y-1">
+                  {stats.map((s) => (
+                    <div key={s} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                      <span className="text-xs text-white/70">{s}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center text-xs text-muted mt-6"
+          >
+            One subscription ({brand.subscription.priceFormatted}/mo) unlocks all tiers. Switch anytime.
+          </motion.p>
+        </div>
+      </section>
+
       {/* ── HR ZONES ── */}
       <section className="py-16 md:py-24 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-5 md:px-8">
