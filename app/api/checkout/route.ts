@@ -51,7 +51,6 @@ export async function POST(req: Request) {
       success_url: `${req.headers.get('origin')}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get('origin')}/checkout?cancelled=true`,
       subscription_data: {
-        trial_period_days: 7,
         metadata: {
           supabase_user_id: user.id,
         },

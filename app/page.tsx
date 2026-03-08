@@ -42,7 +42,7 @@ export default function Home() {
             href="/checkout"
             className="bg-primary text-black px-5 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-primary-dark transition"
           >
-            Try Free
+            Subscribe
           </Link>
         </div>
       </nav>
@@ -455,14 +455,14 @@ export default function Home() {
               The Regiment Is The Edge
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-6 text-white/60 text-sm md:text-base">
-              7-day free trial &middot; Then {brand.subscription.priceFormatted}/mo &middot; Cancel anytime
+              {brand.subscription.priceFormatted}/mo &middot; Full regiment &middot; Cancel anytime
             </motion.p>
             <motion.div variants={fadeUp} className="mt-8">
               <Link
                 href="/checkout"
                 className="inline-flex items-center gap-3 bg-primary text-black px-10 py-5 text-sm font-bold tracking-widest uppercase hover:bg-primary-dark transition pulse-glow"
               >
-                Start Free Trial <ArrowRight className="w-4 h-4" />
+                Start Training <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
           </motion.div>
