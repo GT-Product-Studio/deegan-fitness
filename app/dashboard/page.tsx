@@ -16,6 +16,7 @@ export default async function DashboardPage() {
     .single();
 
   const firstName = profile?.full_name?.split(" ")[0] ?? null;
+  const trainingLevel = (profile?.training_level as "grom" | "factory") || "grom";
   const regiment = brand.regiment;
 
   // Challenge widget data

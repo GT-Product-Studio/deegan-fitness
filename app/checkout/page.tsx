@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Check, ShieldCheck, Lock, ArrowLeft, Loader2 } from "lucide-react";
@@ -10,15 +10,27 @@ import { brand } from "@/config/brand";
 export default function CheckoutPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [level, setLevel] = useState<"grom" | "factory">("grom");
   const sub = brand.subscription;
 
+  useEffect(() => {
+    // Load level from localStorage if available
+    const saved = localStorage.getItem("danger_training_level");
+    if (saved === "factory" || saved === "grom") {
+      setLevel(saved);
+    }
+  }, []);
+
   async function handleCheckout() {
+    // Save level choice
+    localStorage.setItem("danger_training_level", level);
+    
     setLoading(true);
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planType: "subscription" }),
+        body: JSON.stringify({ planType: "subscription", trainingLevel: level }),
       });
       const data = await res.json();
       if (res.status === 401) {
@@ -129,7 +141,33 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6 border-t border-white/10 pt-6">
+              {/* Training Level Selector */}
+              <div>
+                <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4 text-white">Choose Your Level</p>
+                <div className="space-y-3">
+                  {[
+                    { value: "grom" as const, label: "🟢 GROM", desc: "4 days/week • Beginner • 30-45 min sessions" },
+                    { value: "factory" as const, label: "🔴 FACTORY", desc: "5-6 days/week • Serious • 45-75 min sessions" },
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-3 p-3 border border-white/10 rounded-lg hover:border-primary/40 cursor-pointer transition">
+                      <input
+                        type="radio"
+                        name="level"
+                        value={opt.value}
+                        checked={level === opt.value}
+                        onChange={(e) => setLevel(e.target.value as "grom" | "factory")}
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <div className="flex-1">
+                        <p className="text-sm font-bold text-white">{opt.label}</p>
+                        <p className="text-xs text-muted">{opt.desc}</p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               <button
                 onClick={handleCheckout}
                 disabled={loading}

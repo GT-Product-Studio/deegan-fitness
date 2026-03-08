@@ -4,6 +4,9 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(req: Request) {
   try {
+    const body = await req.json();
+    const trainingLevel = body.trainingLevel || 'grom';
+    
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -26,14 +29,21 @@ export async function POST(req: Request) {
         email: user.email || profile?.email,
         metadata: {
           supabase_user_id: user.id,
+          training_level: trainingLevel,
         },
       });
       customerId = customer.id;
 
-      // Save customer ID to profile
+      // Save customer ID and training level to profile
       await supabase
         .from('profiles')
-        .update({ stripe_customer_id: customerId })
+        .update({ stripe_customer_id: customerId, training_level: trainingLevel })
+        .eq('id', user.id);
+    } else {
+      // Update existing profile with training level
+      await supabase
+        .from('profiles')
+        .update({ training_level: trainingLevel })
         .eq('id', user.id);
     }
 
@@ -53,6 +63,7 @@ export async function POST(req: Request) {
       subscription_data: {
         metadata: {
           supabase_user_id: user.id,
+          training_level: trainingLevel,
         },
       },
       allow_promotion_codes: true,
