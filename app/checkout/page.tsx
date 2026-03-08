@@ -110,6 +110,10 @@ export default function CheckoutPage() {
             <div>
               <p className="text-xs font-bold tracking-[0.3em] uppercase mb-6 text-white">Order Summary</p>
               <div className="border border-white/10 p-6 space-y-4">
+                <div className="bg-primary/10 border border-primary/30 p-4 mb-2">
+                  <p className="text-primary text-sm font-bold uppercase tracking-widest">🎉 7-Day Free Trial</p>
+                  <p className="text-white/70 text-xs mt-1">Full access for 7 days — no charge. Cancel anytime before your trial ends.</p>
+                </div>
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="font-bold text-sm text-white">{sub.displayName}</p>
@@ -118,12 +122,12 @@ export default function CheckoutPage() {
                   <p className="font-bold text-sm text-white">{sub.priceFormatted}/mo</p>
                 </div>
                 <div className="border-t border-white/10 pt-4 flex justify-between items-center">
-                  <p className="text-xs font-bold tracking-widest uppercase text-white">Total</p>
+                  <p className="text-xs font-bold tracking-widest uppercase text-white">Due Today</p>
                   <div className="text-right">
-                    <p className="text-3xl font-bold text-white">
-                      {sub.priceDollars}<span className="text-lg text-muted">{sub.priceCents}</span>
+                    <p className="text-3xl font-bold text-primary">
+                      $0<span className="text-lg text-muted">.00</span>
                     </p>
-                    <p className="text-muted text-xs mt-0.5">per month &middot; cancel anytime</p>
+                    <p className="text-muted text-xs mt-0.5">then {sub.priceFormatted}/mo after trial</p>
                   </div>
                 </div>
               </div>
@@ -141,7 +145,7 @@ export default function CheckoutPage() {
                     Loading...
                   </>
                 ) : (
-                  "Start Training Now"
+                  "Start 7-Day Free Trial"
                 )}
               </button>
               <div className="flex items-center justify-center gap-2 text-muted">
