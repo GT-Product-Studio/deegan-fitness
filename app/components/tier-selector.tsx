@@ -8,15 +8,22 @@ const TIERS = [
     id: "grom",
     label: "GROM",
     emoji: "🟢",
-    description: "4 days/week • 30-45 min sessions",
-    detail: "For newer riders, weekend warriors, anyone building their base. Focused on fundamentals.",
+    description: "Beginner — rides 1×/week, trains 3-4×/week",
+    detail: "For kids just starting out, weekend warriors, anyone new to structured training",
   },
   {
-    id: "factory",
-    label: "FACTORY",
+    id: "amateur",
+    label: "AMATEUR",
+    emoji: "🟡",
+    description: "Intermediate — rides 2-3×/week, trains 5-6×/week",
+    detail: "For local racers, serious hobbyists, kids competing at area/regional level",
+  },
+  {
+    id: "pro",
+    label: "PRO",
     emoji: "🔴",
-    description: "5-6 days/week • 45-75 min sessions",
-    detail: "For competitive riders chasing podiums. Race simulations, double sessions, serious volume.",
+    description: "Haiden's level — the benchmark",
+    detail: "Aspiring pros, advanced riders. This is what Haiden actually does. Chase it.",
   },
 ] as const;
 

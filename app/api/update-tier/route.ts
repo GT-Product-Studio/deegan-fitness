@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-const VALID_TIERS = ["grom", "factory"];
+const VALID_TIERS = ["grom", "amateur", "pro"];
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();

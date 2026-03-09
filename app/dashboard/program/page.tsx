@@ -30,7 +30,7 @@ export default async function ProgramPage() {
     .eq("id", user.id)
     .single();
 
-  const trainingLevel = (profile?.training_level as "grom" | "factory") || "grom";
+  const trainingLevel = (profile?.training_level as "grom" | "amateur" | "pro") || "grom";
 
   // Fetch workouts for user's tier
   const { data: workouts } = await supabase

@@ -7,7 +7,8 @@ import { TierBadge } from "@/app/components/tier-selector";
 
 const TIER_STATS: Record<string, { cycling: string; moto: string; gym: string }> = {
   grom: { cycling: "30min", moto: "45min", gym: "30min" },
-  factory: { cycling: "45min", moto: "1.5hr", gym: "1hr" },
+  amateur: { cycling: "1hr", moto: "1.5hr", gym: "45min" },
+  pro: { cycling: "50mi", moto: "2hr", gym: "1.5hr" },
 };
 
 export default async function DashboardPage() {
