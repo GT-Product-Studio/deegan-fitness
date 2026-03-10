@@ -38,12 +38,20 @@ export default function Home() {
               </Link>
             ))}
           </div>
-          <Link
-            href="/checkout"
-            className="bg-primary text-black px-5 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-primary-dark transition"
-          >
-            Subscribe
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="text-xs font-bold tracking-widest uppercase text-white/60 hover:text-white transition px-4 py-2.5"
+            >
+              Login
+            </Link>
+            <Link
+              href="/checkout"
+              className="bg-primary text-black px-5 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-primary-dark transition"
+            >
+              Subscribe
+            </Link>
+          </div>
         </div>
       </nav>
 
