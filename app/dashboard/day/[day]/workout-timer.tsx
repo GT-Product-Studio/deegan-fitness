@@ -161,10 +161,10 @@ export function WorkoutTimer({ workoutId, dayNumber, exercises, onSessionChange 
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M8 5v14l11-7z" />
           </svg>
-          {starting ? "Starting..." : "Start Workout — Track with Watch"}
+          {starting ? "Starting..." : "START WORKOUT"}
         </button>
         <p className="text-[10px] text-muted text-center mt-2 tracking-wider">
-          START A TRAINING SESSION ON YOUR POLAR OR GARMIN WATCH FIRST
+          START TRACKING YOUR EXERCISES
         </p>
       </div>
     );
