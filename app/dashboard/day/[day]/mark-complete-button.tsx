@@ -38,17 +38,17 @@ function CelebrationOverlay({ dayNumber, onDismiss, onKeepGoing }: CelebrationOv
           particleCount: 100,
           spread: 80,
           origin: { x: 0.5, y: 0.1 },
-          colors: ["#c9a84c", "#ffffff", "#FFD700", "#f5e06e"],
+          colors: ["#29F000", "#ffffff", "#22D400", "#66FF33"],
           gravity: 0.85,
         });
 
         setTimeout(() => {
-          shoot({ particleCount: 60, spread: 80, angle: 60,  origin: { x: 0, y: 0.25 }, colors: ["#c9a84c", "#FFD700", "#fff"] });
-          shoot({ particleCount: 60, spread: 80, angle: 120, origin: { x: 1, y: 0.25 }, colors: ["#c9a84c", "#FFD700", "#fff"] });
+          shoot({ particleCount: 60, spread: 80, angle: 60,  origin: { x: 0, y: 0.25 }, colors: ["#29F000", "#22D400", "#fff"] });
+          shoot({ particleCount: 60, spread: 80, angle: 120, origin: { x: 1, y: 0.25 }, colors: ["#29F000", "#22D400", "#fff"] });
         }, 200);
 
         setTimeout(() => {
-          shoot({ particleCount: 80, spread: 130, origin: { x: 0.5, y: 0.05 }, colors: ["#c9a84c", "#fff"], gravity: 1.0 });
+          shoot({ particleCount: 80, spread: 130, origin: { x: 0.5, y: 0.05 }, colors: ["#29F000", "#fff"], gravity: 1.0 });
         }, 500);
       });
     }
@@ -88,27 +88,27 @@ function CelebrationOverlay({ dayNumber, onDismiss, onKeepGoing }: CelebrationOv
         >
           {/* Flame with layered glow rings */}
           <div className="relative flex justify-center mb-6">
-            <div className="absolute w-28 h-28 rounded-full bg-gold/10 animate-ping" style={{ animationDuration: "2.2s" }} />
-            <div className="absolute w-[5.5rem] h-[5.5rem] rounded-full bg-gold/10" />
-            <div className="relative w-20 h-20 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center shadow-lg shadow-gold/20">
-              <Flame className="w-10 h-10 text-gold" />
+            <div className="absolute w-28 h-28 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: "2.2s" }} />
+            <div className="absolute w-[5.5rem] h-[5.5rem] rounded-full bg-primary/10" />
+            <div className="relative w-20 h-20 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center shadow-lg shadow-primary/20">
+              <Flame className="w-10 h-10 text-primary" />
             </div>
           </div>
 
-          <p className="text-gold text-[11px] font-bold tracking-[0.35em] uppercase mb-2">
+          <p className="text-primary text-[11px] font-bold tracking-[0.35em] uppercase mb-2">
             Workout Complete
           </p>
           <h2 className="font-display text-7xl text-white leading-none tracking-wide">
             Day {dayNumber}
           </h2>
-          <p className="text-2xl font-bold text-gold mt-1">Complete 🔥</p>
+          <p className="text-2xl font-bold text-primary mt-1">Complete 🔥</p>
           <p className="text-white/50 text-sm mt-4 leading-relaxed">
             You showed up. Keep the streak alive.
           </p>
 
           <button
             onClick={onKeepGoing}
-            className="mt-7 w-full py-4 bg-gold text-black font-bold text-xs tracking-widest uppercase rounded-xl hover:bg-gold/90 transition"
+            className="mt-7 w-full py-4 bg-primary text-black font-bold text-xs tracking-widest uppercase rounded-xl hover:bg-primary/90 transition"
           >
             Keep Going →
           </button>
@@ -198,8 +198,8 @@ export function MarkCompleteButton({
         disabled={loading}
         className={`w-full py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 transition-colors duration-300 ${
           isCompleted
-            ? "bg-green-500/20 text-green-400 border border-green-500/30"
-            : "bg-gold text-black shadow-lg shadow-gold/20"
+            ? "bg-primary/20 text-primary border-2 border-primary/50"
+            : "bg-primary text-black shadow-lg shadow-primary/30"
         }`}
       >
         {loading ? (
