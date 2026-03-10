@@ -18,25 +18,35 @@ export function HaidenBenchmark({ workout, compact = false }: HaidenBenchmarkPro
   // Don't render if no Haiden data
   if (!haiden_avg_hr && !haiden_calories && !haiden_duration_min) return null;
 
+  // Build stat items — only include non-zero values
+  const stats: { label: string; value: string; sub?: string; highlight?: boolean }[] = [];
+
+  if (haiden_distance_mi && haiden_distance_mi > 0) {
+    stats.push({ label: "Distance", value: `${haiden_distance_mi}`, sub: "miles" });
+  }
+  if (haiden_duration_min && haiden_duration_min > 0) {
+    const h = Math.floor(haiden_duration_min / 60);
+    const m = haiden_duration_min % 60;
+    stats.push({ label: "Total Time", value: h > 0 ? `${h}h ${m}m` : `${m}m` });
+  }
+  if (haiden_avg_hr && haiden_avg_hr > 0) {
+    stats.push({ label: "Avg HR", value: `${haiden_avg_hr}`, sub: "bpm", highlight: true });
+  }
+  if (haiden_calories && haiden_calories > 0) {
+    stats.push({ label: "Calories", value: haiden_calories.toLocaleString() });
+  }
+
+  if (stats.length === 0) return null;
+
   if (compact) {
     return (
       <div className="flex items-center gap-3 bg-[#FF6B00]/10 border border-[#FF6B00]/20 rounded-lg px-3 py-2">
         <span className="text-xs font-bold text-[#FF6B00] tracking-wider uppercase">vs Haiden</span>
-        {haiden_avg_hr && (
-          <span className="text-xs text-white/70">
-            <span className="font-bold text-white">{haiden_avg_hr}</span> avg bpm
+        {stats.map((s) => (
+          <span key={s.label} className="text-xs text-white/70">
+            <span className="font-bold text-white">{s.value}</span> {s.sub || s.label.toLowerCase()}
           </span>
-        )}
-        {haiden_calories && (
-          <span className="text-xs text-white/70">
-            <span className="font-bold text-white">{haiden_calories.toLocaleString()}</span> cal
-          </span>
-        )}
-        {haiden_duration_min && (
-          <span className="text-xs text-white/70">
-            <span className="font-bold text-white">{Math.floor(haiden_duration_min / 60)}h {haiden_duration_min % 60}m</span>
-          </span>
-        )}
+        ))}
       </div>
     );
   }
@@ -56,35 +66,16 @@ export function HaidenBenchmark({ workout, compact = false }: HaidenBenchmarkPro
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {haiden_distance_mi && (
-          <div className="bg-black/30 rounded-xl p-3 text-center">
-            <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1">Distance</p>
-            <p className="text-xl font-bold text-white">{haiden_distance_mi}</p>
-            <p className="text-[10px] text-white/30">miles</p>
-          </div>
-        )}
-        {haiden_duration_min && (
-          <div className="bg-black/30 rounded-xl p-3 text-center">
-            <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1">Total Time</p>
-            <p className="text-xl font-bold text-white">
-              {Math.floor(haiden_duration_min / 60)}h {haiden_duration_min % 60}m
+      <div className={`grid gap-3 ${stats.length <= 2 ? "grid-cols-2" : stats.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+        {stats.map((stat) => (
+          <div key={stat.label} className="bg-black/30 rounded-xl p-3 text-center">
+            <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1">{stat.label}</p>
+            <p className={`text-xl font-bold ${stat.highlight ? "text-[#FF6B00]" : "text-white"}`}>
+              {stat.value}
             </p>
+            {stat.sub && <p className="text-[10px] text-white/30">{stat.sub}</p>}
           </div>
-        )}
-        {haiden_avg_hr && (
-          <div className="bg-black/30 rounded-xl p-3 text-center">
-            <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1">Avg HR</p>
-            <p className="text-xl font-bold text-[#FF6B00]">{haiden_avg_hr}</p>
-            <p className="text-[10px] text-white/30">bpm</p>
-          </div>
-        )}
-        {haiden_calories && (
-          <div className="bg-black/30 rounded-xl p-3 text-center">
-            <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1">Calories</p>
-            <p className="text-xl font-bold text-white">{haiden_calories.toLocaleString()}</p>
-          </div>
-        )}
+        ))}
       </div>
 
       <p className="text-[10px] text-white/20 text-center mt-3 tracking-wider">
