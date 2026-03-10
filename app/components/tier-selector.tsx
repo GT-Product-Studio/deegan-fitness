@@ -8,22 +8,15 @@ const TIERS = [
     id: "grom",
     label: "GROM",
     emoji: "🟢",
-    description: "Beginner — rides 1×/week, trains 3-4×/week",
-    detail: "For kids just starting out, weekend warriors, anyone new to structured training",
+    description: "Scaled — 40% of Haiden's volume",
+    detail: "For riders just starting out, weekend warriors, anyone building a base",
   },
   {
-    id: "amateur",
-    label: "AMATEUR",
-    emoji: "🟡",
-    description: "Intermediate — rides 2-3×/week, trains 5-6×/week",
-    detail: "For local racers, serious hobbyists, kids competing at area/regional level",
-  },
-  {
-    id: "pro",
-    label: "PRO",
+    id: "factory",
+    label: "FACTORY",
     emoji: "🔴",
-    description: "Haiden's level — the benchmark",
-    detail: "Aspiring pros, advanced riders. This is what Haiden actually does. Chase it.",
+    description: "Match Haiden's volume — the full send",
+    detail: "Haiden's real weekly regiment. 50mi rides, 2hr moto, 1.5hr gym. Chase it.",
   },
 ] as const;
 

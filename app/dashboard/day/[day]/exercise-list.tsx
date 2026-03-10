@@ -43,6 +43,9 @@ const BLOCK_CONFIG: Record<string, { emoji: string; label: string; accent: strin
   cycling: { emoji: "🚴", label: "Road Ride", accent: "text-primary", border: "border-primary/30" },
   moto: { emoji: "🏍️", label: "Moto Practice", accent: "text-zone-threshold", border: "border-zone-threshold/30" },
   gym: { emoji: "🏋️", label: "Gym Session", accent: "text-zone-tempo", border: "border-zone-tempo/30" },
+  core: { emoji: "🔥", label: "Core Work", accent: "text-zone-tempo", border: "border-zone-tempo/30" },
+  grip: { emoji: "✊", label: "Grip & Forearms", accent: "text-zone-threshold", border: "border-zone-threshold/30" },
+  hiit: { emoji: "⚡", label: "HIIT Circuit", accent: "text-zone-redline", border: "border-zone-redline/30" },
   recovery: { emoji: "🧘", label: "Recovery", accent: "text-muted", border: "border-white/10" },
   race: { emoji: "🏁", label: "Race Day", accent: "text-zone-redline", border: "border-zone-redline/30" },
 };

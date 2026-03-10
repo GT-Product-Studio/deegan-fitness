@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { MarkCompleteButton } from "./mark-complete-button";
 import { ExerciseList } from "./exercise-list";
+import { HaidenBenchmark } from "@/app/components/haiden-benchmark";
 
 export default async function DayPage({
   params,
@@ -23,7 +24,7 @@ export default async function DayPage({
     .eq("id", user.id)
     .single();
 
-  const trainingLevel = (profile?.training_level as "grom" | "amateur" | "pro") || "grom";
+  const trainingLevel = (profile?.training_level as "grom" | "factory") || "grom";
 
   // Fetch workout for this day + training level
   const { data: workout } = await supabase
@@ -135,6 +136,8 @@ export default async function DayPage({
           <p className="text-sm text-muted mt-1">{workout.description}</p>
         )}
       </div>
+
+      <HaidenBenchmark workout={workout} />
 
       <ExerciseList
         exercises={exercises || []}
