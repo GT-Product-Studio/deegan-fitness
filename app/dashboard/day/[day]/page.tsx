@@ -79,7 +79,7 @@ export default async function DayPage({
   const hasNext = dayNumber < 30;
 
   return (
-    <div className="space-y-6 pb-24">
+    <div className="space-y-6 pb-8">
       <div>
         <div className="flex items-center justify-between mb-4">
           <Link
@@ -173,17 +173,7 @@ export default async function DayPage({
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-white/10 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:hidden">
-        <div className="max-w-lg mx-auto">
-          <MarkCompleteButton
-            workoutId={workout.id}
-            isCompleted={isCompleted}
-            dayNumber={dayNumber}
-          />
-        </div>
-      </div>
-
-      <div className="hidden md:block">
+      <div className="pt-4">
         <MarkCompleteButton
           workoutId={workout.id}
           isCompleted={isCompleted}
